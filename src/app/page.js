@@ -6,6 +6,8 @@ export default function Welcome() {
   // Enter code, verify on BE, send to app context
   return (
     <main className={styles.main}>
+      <input type="password" />
+      <button>Submit</button>
     </main>
   )
 }
