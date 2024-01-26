@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { sendEmailPost } from "../utils/apicalls";
+import { useEffect, useState } from "react";
+import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 
 export default function SecretShopper() {
   const [responses, setResponses] = useState({
@@ -11,6 +11,31 @@ export default function SecretShopper() {
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
 
+  useEffect(() => {
+    if (imgUploadBase64 && !imgUploadImgurUrl) {
+      const uploadImageToImgur = async () => {
+        try {
+          const imgFormData = new FormData();
+          imgFormData.append("base64", imgUploadBase64);
+
+          const imgurRes = await uploadImageImgurPost(imgFormData);
+          if (imgurRes.status === 200) {
+            const imgurData = await JSON.parse(imgurRes.resBody);
+            console.log(imgurData)
+            setImgUploadImgurUrl(imgurData.data.link);
+          } else {
+            throw new Error(imgurRes);
+          }
+        } catch (error) {
+          console.log(error);
+          // error handling for user
+        }
+      };
+
+      uploadImageToImgur();
+    }
+  }, [imgUploadBase64, imgUploadImgurUrl]);
+
   const handleInputChange = (e) => {
     setResponses({
       ...responses,
@@ -19,8 +44,12 @@ export default function SecretShopper() {
   };
 
   const handlePhotoUpload = (event) => {
-    if (event.target.files.length > 1) {
+    if (imgUpload) {
+      // Error message, already uploaded?
+      return;
+    } else if (event.target.files.length > 1) {
       // Throw an error, only allow one photo upload
+      return;
     }
 
     const photo = event.target.files[0];
@@ -59,9 +88,11 @@ export default function SecretShopper() {
           ctx.drawImage(img, 0, 0, width, height);
 
           // Convert the canvas to a JPEG format with quality 80%
-          const jpegBase64 = canvas.toDataURL("image/jpeg", 0.8);
+          const dataURI = canvas.toDataURL("image/jpeg", 0.8);
+          // Remove prefix
+          const base64 = dataURI.split(",")[1];
 
-          setImgUploadBase64(jpegBase64);
+          setImgUploadBase64(base64);
         };
 
         img.src = e.target.result;
@@ -77,7 +108,7 @@ export default function SecretShopper() {
     try {
       const sendRes = await sendEmailPost({
         responses: responses,
-        photo: imgUploadBase64,
+        photo: imgUploadImgurUrl,
       });
       console.log(sendRes);
     } catch (error) {
