@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import { verifyCode } from "./utils/apicalls";
 
 export default function Welcome() {
   // Welcome page here
@@ -11,6 +12,21 @@ export default function Welcome() {
     setCode(e.target.value);
   };
 
+  const handleSubmit = async () => {
+    try {
+      const isAuthorized = await verifyCode(code);
+      console.log(isAuthorized)
+
+      if (isAuthorized) {
+        alert("AUTHORIZED");
+      } else {
+        alert("FAILED AUTH");
+      }
+    } catch (error) {
+      // handle error for user
+    }
+  };
+
   return (
     <main className={styles.main}>
       <input
@@ -19,7 +35,7 @@ export default function Welcome() {
         value={code}
         onChange={(e) => handleChange(e)}
       />
-      <button>Submit</button>
+      <button onClick={handleSubmit}>Submit</button>
     </main>
   );
 }

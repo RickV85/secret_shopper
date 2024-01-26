@@ -1,3 +1,25 @@
+export const verifyCode = async (userCode) => {
+  try {
+    const verifyRes = await fetch("/api/verify_code", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userCode),
+    });
+
+    if (verifyRes.ok) {
+      const isAuthorized = await verifyRes.json();
+      return isAuthorized.verified;
+    } else {
+      throw new Error(verifyRes);
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const uploadImageImgurPost = async (imgFormData) => {
   try {
     const res = await fetch("/api/upload_to_imgur", {
@@ -11,6 +33,7 @@ export const uploadImageImgurPost = async (imgFormData) => {
       throw new Error(resMessage);
     }
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -31,6 +54,7 @@ export const sendEmailPost = async (data) => {
       throw new Error(resMessage);
     }
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
