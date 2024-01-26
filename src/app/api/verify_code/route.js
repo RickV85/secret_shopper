@@ -6,11 +6,14 @@ export async function POST(req) {
     const secretCode = process.env.SECRET_CODE;
 
     if (userCode === secretCode) {
-      return NextResponse.json({data: { verified: true }, error: null });
+      return NextResponse.json({ data: { verified: true } });
     } else {
-      return NextResponse.json({data: { verified: false }, error: null });
+      return NextResponse.json({ data: { verified: false } });
     }
   } catch (error) {
-    return NextResponse.json({ error: { message: error.message, code: "SERVER_ERROR" }, data: null }, 500);
+    return NextResponse.json(
+      { error: { message: error.message, code: "SERVER_ERROR" }, data: null },
+      500
+    );
   }
 }

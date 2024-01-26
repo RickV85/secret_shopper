@@ -12,7 +12,7 @@ export const verifyCode = async (userCode) => {
       const resMessage = await res.json();
       return resMessage.data.verified;
     } else {
-      throw new Error(res);
+      throw new Error(res.error);
     }
   } catch (error) {
     console.error(error);
@@ -30,7 +30,7 @@ export const uploadImageImgurPost = async (imgFormData) => {
     if (res.ok) {
       return resMessage;
     } else {
-      throw new Error(resMessage);
+      throw new Error(resMessage.error);
     }
   } catch (error) {
     console.error(error);
