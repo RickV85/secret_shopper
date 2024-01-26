@@ -10,8 +10,7 @@ export async function POST(req) {
       throw new Error("Failure - no emailContent");
     }
 
-    const { responses, photo } = emailContent;
-    // return NextResponse.json("Testing")
+    const { responses, photoUrl } = emailContent;
 
     const resend = new Resend(process.env.RESEND_TEST_API_KEY);
 
@@ -24,7 +23,7 @@ export async function POST(req) {
         <body>
           <h1>it works!</h1>
           <p>${responses.q1}</p>
-          <img src="${photo}" alt="Secret shopper uploaded photo" />
+          <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
         </ body>
         `,
       },
@@ -44,23 +43,20 @@ export async function POST(req) {
       throw new Error("Failure - Resend failed");
     }
 
-    return NextResponse.json({ message: "Success", status: 200 });
+    return NextResponse.json({ data: { message: "Email successfully sent" } });
   } catch (error) {
+    let status = 500;
+    let errorCode = "UNKNOWN_ERROR";
     if (error.message === "Failure - Resend failed") {
-      return NextResponse.json({
-        message: error.message,
-        status: 502,
-      });
+      status = 502;
+      errorCode = "RESEND_FAILED";
     } else if (error.message === "Failure - no emailContent") {
-      return NextResponse.json({
-        message: error.message,
-        status: 400,
-      });
-    } else {
-      return NextResponse.json({
-        message: "Failure - Unknown server error",
-        status: 500,
-      });
+      status = 400;
+      errorCode = "NO_EMAIL_CONTENT";
     }
+    return NextResponse.json(
+      { error: { message: error.message, code: errorCode }, data: null },
+      status
+    );
   }
 }

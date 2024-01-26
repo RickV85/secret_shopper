@@ -49,7 +49,7 @@ export const sendEmailPost = async (data) => {
     });
     const resMessage = await res.json();
     if (res.ok) {
-      return resMessage;
+      return resMessage.data.message;
     } else {
       throw new Error(resMessage);
     }

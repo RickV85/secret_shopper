@@ -110,7 +110,7 @@ export default function SecretShopper() {
     try {
       const sendRes = await sendEmailPost({
         responses: responses,
-        photo: imgUploadImgurUrl,
+        photoUrl: imgUploadImgurUrl,
       });
       console.log(sendRes);
     } catch (error) {
