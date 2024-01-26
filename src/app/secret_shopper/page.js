@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { sendEmailPost } from "../utils/apicalls";
 
 export default function SecretShopper() {
   const [responses, setResponses] = useState({
@@ -18,22 +19,10 @@ export default function SecretShopper() {
     // API call to post to api/send_email
     e.preventDefault();
     try {
-      const res = await fetch("/api/send_email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(responses),
-      });
-      if (res.ok) {
-        const resMessage = await res.json();
-        console.log(resMessage);
-        return res;
-      } else {
-        throw new Error(res.json());
-      }
+      const sendRes = await sendEmailPost(responses);
+      console.log(sendRes)
     } catch (error) {
-      alert(error);
+      console.error(error)
     }
   };
 
