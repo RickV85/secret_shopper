@@ -3,20 +3,15 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const imgFormData = await req.formData();
-    const imgData = imgFormData.get("base64");
     const imgurApiKey = process.env.IMGUR_CLIENT_ID;
 
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Client-ID ${imgurApiKey}`);
 
-    const formdata = new FormData();
-    formdata.append("image", `${imgData}`);
-    formdata.append("type", "base64");
-
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
-      body: formdata,
+      body: imgFormData,
       redirect: "follow",
     };
 

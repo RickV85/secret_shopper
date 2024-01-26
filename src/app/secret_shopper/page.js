@@ -16,7 +16,8 @@ export default function SecretShopper() {
       const uploadImageToImgur = async () => {
         try {
           const imgFormData = new FormData();
-          imgFormData.append("base64", imgUploadBase64);
+          imgFormData.append("image", imgUploadBase64);
+          imgFormData.append("type", "base64");
 
           const imgurRes = await uploadImageImgurPost(imgFormData);
           if (imgurRes.status === 200) {
