@@ -1,6 +1,6 @@
 export const verifyCode = async (userCode) => {
   try {
-    const verifyRes = await fetch("/api/verify_code", {
+    const res = await fetch("/api/verify_code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -8,11 +8,11 @@ export const verifyCode = async (userCode) => {
       body: JSON.stringify(userCode),
     });
 
-    if (verifyRes.ok) {
-      const isAuthorized = await verifyRes.json();
-      return isAuthorized.verified;
+    if (res.ok) {
+      const resMessage = await res.json();
+      return resMessage.data.verified;
     } else {
-      throw new Error(verifyRes);
+      throw new Error(res);
     }
   } catch (error) {
     console.error(error);

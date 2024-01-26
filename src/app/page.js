@@ -1,24 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
 import styles from "./page.module.css";
 import { verifyCode } from "./utils/apicalls";
 
 export default function Welcome() {
   // Welcome page here
   // Enter code, verify on BE, send to app context
-  const [code, setCode] = useState("");
+  const [userCode, setUserCode] = useState("");
+  const router = useRouter();
 
   const handleChange = (e) => {
-    setCode(e.target.value);
+    setUserCode(e.target.value);
   };
 
   const handleSubmit = async () => {
     try {
-      const isAuthorized = await verifyCode(code);
+      const isAuthorized = await verifyCode(userCode);
       console.log(isAuthorized)
 
       if (isAuthorized) {
-        alert("AUTHORIZED");
+        router.push('/secret_shopper')
       } else {
         alert("FAILED AUTH");
       }
@@ -32,7 +34,7 @@ export default function Welcome() {
       <input
         id="codeInput"
         type="text"
-        value={code}
+        value={userCode}
         onChange={(e) => handleChange(e)}
       />
       <button onClick={handleSubmit}>Submit</button>
