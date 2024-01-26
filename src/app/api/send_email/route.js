@@ -10,6 +10,9 @@ export async function POST(req) {
       throw new Error("Failure - no emailContent");
     }
 
+    const { responses, photo } = emailContent;
+    // return NextResponse.json("Testing")
+
     const resend = new Resend(process.env.RESEND_TEST_API_KEY);
 
     const sendResult = await resend.batch.send([
@@ -17,8 +20,12 @@ export async function POST(req) {
         from: "Rick <rick@rickvermeil.com>",
         to: ["rickv85@gmail.com"],
         subject: "hello world",
-        html: `<h1>it works!</h1>
-        <p>${emailContent.q1}</p>
+        html: `
+        <body>
+          <h1>it works!</h1>
+          <p>${responses.q1}</p>
+          <img src="${photo}" alt="Secret shopper uploaded photo" />
+        </ body>
         `,
       },
       // SEND MULTIPLE EMAILS WITH BATCH.SEND -
@@ -33,6 +40,7 @@ export async function POST(req) {
     ]);
 
     if (sendResult.error) {
+      console.log(sendResult.error);
       throw new Error("Failure - Resend failed");
     }
 
