@@ -14,8 +14,9 @@ export default function SecretShopper() {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     // API call to post to api/send_email
+    e.preventDefault();
     try {
       const res = await fetch("/api/send_email", {
         method: "POST",
@@ -25,10 +26,11 @@ export default function SecretShopper() {
         body: JSON.stringify(responses),
       });
       if (res.ok) {
-        console.log(res);
+        const resMessage = await res.json();
+        console.log(resMessage);
         return res;
       } else {
-        throw new Error(res);
+        throw new Error(res.json());
       }
     } catch (error) {
       alert(error);
@@ -37,7 +39,7 @@ export default function SecretShopper() {
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         {/* Create reuseable components that render Yes/No, multiple choice questions, and text inputs
         then map over an array of questions/available responses with type to indicate which component to use */}
         {/* legend and fieldset for all questions */}
