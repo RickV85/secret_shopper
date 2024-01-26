@@ -22,7 +22,7 @@ export default function SecretShopper() {
           const imgurRes = await uploadImageImgurPost(imgFormData);
           if (imgurRes.status === 200) {
             const imgurData = await JSON.parse(imgurRes.resBody);
-            console.log(imgurData)
+            console.log(imgurData);
             setImgUploadImgurUrl(imgurData.data.link);
           } else {
             throw new Error(imgurRes);
