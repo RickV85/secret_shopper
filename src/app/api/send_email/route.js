@@ -4,7 +4,6 @@ import { Resend } from "resend";
 export async function POST(req) {
   try {
     const emailContent = await req.json();
-    console.log(emailContent);
 
     if (!emailContent) {
       throw new Error("Failure - no emailContent");

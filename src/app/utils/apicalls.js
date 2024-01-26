@@ -1,23 +1,23 @@
-export const verifyCode = async (userCode) => {
-  try {
-    const res = await fetch("/api/verify_code", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userCode),
-    });
+async function makeFetchRequest(url, options) {
+  const response = await fetch(url, options);
+  const data = await response.json();
 
-    if (res.ok) {
-      const resMessage = await res.json();
-      return resMessage.data.verified;
-    } else {
-      throw new Error(res.error);
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
+  if (!response.ok) {
+    throw new Error(data.error.message || 'An unknown error occurred');
   }
+
+  return data;
+}
+
+export const verifyCode = async (userCode) => {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userCode),
+  };
+
+  const data = await makeFetchRequest("/api/verify_code", options);
+  return data.data.verified;
 };
 
 export const uploadImageImgurPost = async (imgFormData) => {
@@ -51,7 +51,7 @@ export const sendEmailPost = async (data) => {
     if (res.ok) {
       return resMessage.data.message;
     } else {
-      throw new Error(resMessage);
+      throw new Error(resMessage.error);
     }
   } catch (error) {
     console.error(error);

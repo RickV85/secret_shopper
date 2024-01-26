@@ -17,7 +17,6 @@ export default function Welcome() {
   const handleSubmit = async () => {
     try {
       const isAuthorized = await verifyCode(userCode);
-      console.log(isAuthorized)
 
       if (isAuthorized) {
         router.push('/secret_shopper')
