@@ -106,6 +106,10 @@ export default function SecretShopper() {
   const handleSubmit = async (e) => {
     // API call to post to api/send_email
     e.preventDefault();
+    if (imgUpload && !imgUploadImgurUrl) {
+      // error - wait for image to upload?
+      return;
+    }
     try {
       const sendRes = await sendEmailPost({
         responses: responses,
