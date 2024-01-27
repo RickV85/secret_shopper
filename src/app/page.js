@@ -35,6 +35,9 @@ export default function Welcome() {
         type="text"
         value={userCode}
         onChange={(e) => handleChange(e)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSubmit();
+        }}
       />
       <button onClick={handleSubmit}>Submit</button>
     </main>
