@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { verifyCode } from "./utils/apicalls";
 
@@ -19,11 +19,12 @@ export default function Welcome() {
       const isAuthorized = await verifyCode(userCode);
 
       if (isAuthorized) {
-        router.push('/secret_shopper')
+        router.push("/secret_shopper");
       } else {
         alert("FAILED AUTH");
       }
     } catch (error) {
+      console.error(error);
       // handle error for user
     }
   };

@@ -20,9 +20,8 @@ export default function SecretShopper() {
           imgFormData.append("type", "base64");
 
           const imgurRes = await uploadImageImgurPost(imgFormData);
-          if (imgurRes.data) {
-            const imgurResData = await JSON.parse(imgurRes.data);
-            setImgUploadImgurUrl(imgurResData.data.link);
+          if (imgurRes) {
+            setImgUploadImgurUrl(imgurRes.link);
           }
         } catch (error) {
           console.log(error);
@@ -46,7 +45,7 @@ export default function SecretShopper() {
       // Error message, already uploaded?
       return;
     } else if (event.target.files.length > 1) {
-      // Throw an error, only allow one photo upload
+      // Error, only allow one photo upload
       return;
     }
 
@@ -115,6 +114,7 @@ export default function SecretShopper() {
       console.log(sendRes);
     } catch (error) {
       console.error(error);
+      // User error messaging
     }
   };
 
