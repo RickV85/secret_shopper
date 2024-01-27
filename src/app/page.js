@@ -5,8 +5,6 @@ import styles from "./page.module.css";
 import { verifyCode } from "./utils/apicalls";
 
 export default function Welcome() {
-  // Welcome page here
-  // Enter code, verify on BE, send to app context
   const [userCode, setUserCode] = useState("");
   const router = useRouter();
 
@@ -19,7 +17,8 @@ export default function Welcome() {
       const isAuthorized = await verifyCode(userCode);
 
       if (isAuthorized) {
-        router.push("/secret_shopper");
+        router.push("/form");
+        // Save code to session storage or context
       } else {
         alert("FAILED AUTH");
       }

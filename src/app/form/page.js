@@ -3,13 +3,17 @@
 import { useEffect, useState } from "react";
 import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 
-export default function SecretShopper() {
+export default function Form() {
   const [responses, setResponses] = useState({
     q1: "",
   });
   const [imgUpload, setImgUpload] = useState(null);
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
+
+  useEffect(() => {
+    // Check user is auth'd on load
+  }, [])
 
   useEffect(() => {
     if (imgUploadBase64 && !imgUploadImgurUrl) {
