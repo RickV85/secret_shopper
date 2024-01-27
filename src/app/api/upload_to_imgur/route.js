@@ -20,9 +20,9 @@ export async function POST(req) {
       requestOptions
     );
 
-    const imgurText = await imgurRes.text();
+    const imgurResParsed = await imgurRes.json();
 
-    return NextResponse.json({ data: imgurText });
+    return NextResponse.json({ data: imgurResParsed.data });
   } catch (error) {
     return NextResponse.json({ error: { message: error.message, code: "IMGUR_UPLOAD_FAILED" }, data: null }, 502);
   }

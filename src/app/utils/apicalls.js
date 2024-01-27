@@ -23,7 +23,7 @@ export const verifyCode = async (userCode) => {
 export const uploadImageImgurPost = async (imgFormData) => {
   const options = { method: "POST", body: imgFormData };
   const imgurRes = await makeFetchRequest("/api/upload_to_imgur", options);
-  return JSON.parse(imgurRes.data).data;
+  return imgurRes.data;
 };
 
 export const sendEmailPost = async (submittedData) => {
