@@ -1,6 +1,7 @@
 .button {
   background: transparent;
   position: relative;
+  z-index: 1;
   width: 7.5rem;
   height: 3rem;
   left: 0.5rem;

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { verifyCode } from "./utils/apicalls";
-import BackButton from "./Components/BackButton/BackButton";
+import Header from "./Components/Header/Header";
 
 export default function Welcome() {
   const [userCode, setUserCode] = useState("");
@@ -31,8 +31,8 @@ export default function Welcome() {
 
   return (
     <main className={styles.main}>
-    <BackButton />
-      <input
+    <Header />
+      {/* <input
         id="codeInput"
         type="text"
         value={userCode}
@@ -41,7 +41,7 @@ export default function Welcome() {
           if (e.key === "Enter") handleSubmit();
         }}
       />
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit}>Submit</button> */}
     </main>
   );
 }
