@@ -18,6 +18,12 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+}
+
+.error {
+  font-weight: 700;
+  color: orangered;
 }
 
 .code-input {
@@ -27,6 +33,10 @@
   border: 2px solid #3054a1;
   border-radius: 3px;
   text-align: center;
+  font-size: 1.5rem;
+  color: #3054a1;
+  font-weight: 600;
+  font-family: var(--montserrat);
 }
 
 .submit-btn {

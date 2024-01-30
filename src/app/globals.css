@@ -39,6 +39,7 @@ button {
   line-height: normal;
   letter-spacing: 0.1em;
   color: #92bde3;
+  cursor: pointer;
 }
 
 h1 {
