@@ -15,9 +15,7 @@ export default function CodeInput() {
   };
 
   const failedAuth = () => {
-    setErrorMsg(
-      "Please check the code and try again"
-    );
+    setErrorMsg("Please check the code and try again");
     setTimeout(() => {
       setErrorMsg("");
       setUserCode("");
@@ -46,9 +44,13 @@ export default function CodeInput() {
     <section className={styles["code-input-section"]}>
       <h1 className={styles["welcome-headline"]}>WELCOME, SECRET SHOPPER!</h1>
       <div className={styles["input-div"]}>
-        {!errorMsg ? <label htmlFor="codeInput" >
-          Please enter your code below to begin the survey
-        </label> : <p className={styles.error}>{errorMsg}</p>}
+        {!errorMsg ? (
+          <label htmlFor="codeInput">
+            Please enter your code below to begin the survey
+          </label>
+        ) : (
+          <p className={styles.error}>{errorMsg}</p>
+        )}
         <input
           id="codeInput"
           className={styles["code-input"]}
