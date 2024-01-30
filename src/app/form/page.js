@@ -1,15 +1,17 @@
 "use client";
-
+import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
+import Header from "../Components/Header/Header";
 
 export default function Form() {
   const [responses, setResponses] = useState({
     q1: "",
   });
   const [imgUpload, setImgUpload] = useState(null);
+  const [imgUploadName, setImgUploadName] = useState("No file chosen");
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
   const router = useRouter();
@@ -76,11 +78,10 @@ export default function Form() {
     }
 
     const photo = event.target.files[0];
-    // if () {
-    //   // image too large throw error
-    // }
+
     if (photo) {
       setImgUpload(photo);
+      setImgUploadName(photo.name);
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -145,40 +146,57 @@ export default function Form() {
   };
 
   return (
-    <main>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        {/* Create reuseable components that render Yes/No, multiple choice questions, and text inputs
+    <>
+      <Header />
+      <main className={styles.main}>
+        <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
+        <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+          {/* Create reuseable components that render Yes/No, multiple choice questions, and text inputs
         then map over an array of questions/available responses with type to indicate which component to use */}
-        {/* legend and fieldset for all questions */}
-        <legend>Is this working?</legend>
-        <fieldset>
-          <input
-            id="q1-yes"
-            name="q1"
-            value={"Yes"}
-            type="radio"
-            checked={responses["q1"] === "Yes"}
-            onChange={handleInputChange}
-          />
-          <label htmlFor="yes">Yes</label>
-          <input
-            id="q1-no"
-            name="q1"
-            value={"No"}
-            type="radio"
-            checked={responses["q1"] === "No"}
-            onChange={handleInputChange}
-          />
-          <label htmlFor="no">No</label>
-        </fieldset>
-        <label htmlFor="photoUpload">Upload a photo</label>
-        <input
-          name="photoUpload"
-          type="file"
-          onChange={(event) => handlePhotoUpload(event)}
-        />
-        <button role="submit">Submit</button>
-      </form>
-    </main>
+          {/* legend and fieldset for all questions */}
+          <legend>Is this working?</legend>
+          <fieldset>
+            <input
+              id="q1-yes"
+              name="q1"
+              value={"Yes"}
+              type="radio"
+              checked={responses["q1"] === "Yes"}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="yes">Yes</label>
+            <input
+              id="q1-no"
+              name="q1"
+              value={"No"}
+              type="radio"
+              checked={responses["q1"] === "No"}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="no">No</label>
+          </fieldset>
+          <div className={styles["photo-upload-div"]}>
+            <label
+              htmlFor="photoInput"
+              className={styles["image-upload-input"]}
+            >
+              UPLOAD PHOTO
+            </label>
+            <input
+              id="photoInput"
+              name="photoUpload"
+              type="file"
+              onChange={(event) => handlePhotoUpload(event)}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <p>{imgUploadName}</p>
+          </div>
+          <button role="submit" className={styles["submit-form-btn"]}>
+            SUBMIT
+          </button>
+        </form>
+      </main>
+    </>
   );
 }

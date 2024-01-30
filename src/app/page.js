@@ -5,10 +5,12 @@ import CodeInput from "./Components/CodeInput/CodeInput";
 
 export default function Welcome() {
   return (
-    <main className={styles.main}>
+    <>
       <Header />
-      <HeroImage />
-      <CodeInput />
-    </main>
+      <main className={styles.main}>
+        <HeroImage />
+        <CodeInput />
+      </main>
+    </>
   );
 }
