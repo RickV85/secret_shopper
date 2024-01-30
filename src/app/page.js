@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { verifyCode } from "./utils/apicalls";
+import BackButton from "./Components/BackButton/BackButton";
 
 export default function Welcome() {
   const [userCode, setUserCode] = useState("");
@@ -30,6 +31,7 @@ export default function Welcome() {
 
   return (
     <main className={styles.main}>
+    <BackButton />
       <input
         id="codeInput"
         type="text"

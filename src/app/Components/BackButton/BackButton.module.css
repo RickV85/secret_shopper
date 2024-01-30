@@ -1,0 +1,16 @@
+.button {
+  background: transparent;
+  position: relative;
+  width: 7.5rem;
+  height: 3rem;
+  left: 0.5rem;
+  top: 0.5rem;
+  border: 2px solid #92bde3;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: normal;
+  letter-spacing: 0.1em;
+  color: #92bde3;
+}
