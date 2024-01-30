@@ -28,7 +28,7 @@ export default function CodeInput() {
 
       if (isAuthorized) {
         router.push("/form");
-        // Save code to session storage or context
+        window.sessionStorage.setItem("code", userCode);
       } else {
         failedAuth();
       }

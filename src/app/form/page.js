@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
+import { useRouter } from "next/navigation";
+import { verifyCode } from "../utils/apicalls";
 
 export default function Form() {
   const [responses, setResponses] = useState({
@@ -10,10 +12,30 @@ export default function Form() {
   const [imgUpload, setImgUpload] = useState(null);
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
-    // Check user is auth'd on load
-  }, [])
+    const verifyUserCode = async () => {
+      try {
+        const userCode = await window.sessionStorage.getItem("code");
+        const isAuthorized = await verifyCode(userCode);
+
+        if (!isAuthorized) {
+          alert("Please return to the welcome page and re-enter your code.");
+          router.push("/");
+        } else {
+          console.log("userCode verified");
+        }
+      } catch (error) {
+        console.error(error);
+        alert(
+          "An error occurred, please return to the welcome page and re-enter your code."
+        );
+        router.push("/");
+      }
+    };
+    verifyUserCode();
+  }, []);
 
   useEffect(() => {
     if (imgUploadBase64 && !imgUploadImgurUrl) {
