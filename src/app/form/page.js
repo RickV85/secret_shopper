@@ -14,6 +14,7 @@ export default function Form() {
   const [imgUploadName, setImgUploadName] = useState("No file chosen");
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
+  const [comment, setComment] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -127,7 +128,6 @@ export default function Form() {
   };
 
   const handleSubmit = async (e) => {
-    // API call to post to api/send_email
     e.preventDefault();
     if (imgUpload && !imgUploadImgurUrl) {
       // error - wait for image to upload?
@@ -139,6 +139,7 @@ export default function Form() {
         photoUrl: imgUploadImgurUrl,
       });
       console.log(sendRes);
+      // router.push("/complete");
     } catch (error) {
       console.error(error);
       // User error messaging
@@ -175,22 +176,41 @@ export default function Form() {
             />
             <label htmlFor="no">No</label>
           </fieldset>
-          <div className={styles["photo-upload-div"]}>
-            <label
-              htmlFor="photoInput"
-              className={styles["image-upload-input"]}
-            >
-              UPLOAD PHOTO
+          <div id="photoInputDiv" className={styles["photo-upload-div"]}>
+            <label htmlFor="photoInputDiv">
+              Optional - Upload a photo from your visit
             </label>
-            <input
-              id="photoInput"
-              name="photoUpload"
-              type="file"
-              onChange={(event) => handlePhotoUpload(event)}
-              accept="image/*"
-              style={{ display: "none" }}
+            <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
+              <label
+                htmlFor="photoInput"
+                className={styles["image-upload-input"]}
+              >
+                UPLOAD PHOTO
+              </label>
+              <input
+                id="photoInput"
+                name="photoUpload"
+                type="file"
+                onChange={(event) => handlePhotoUpload(event)}
+                accept="image/*"
+                style={{ display: "none" }}
+              />
+              <p>{imgUploadName}</p>
+            </div>
+          </div>
+          <div className={styles["comment-div"]}>
+            <label htmlFor="commentInput">
+              Optional - Please leave any additional comments below
+            </label>
+            <textarea
+              id="commentInput"
+              name="comment"
+              type="text"
+              role="input"
+              className={styles["comment-input"]}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
-            <p>{imgUploadName}</p>
           </div>
           <button role="submit" className={styles["submit-form-btn"]}>
             SUBMIT
