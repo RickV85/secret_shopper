@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { verifyCode } from "./utils/apicalls";
 import Header from "./Components/Header/Header";
+import HeroImage from "./Components/HeroImage/HeroImage";
 
 export default function Welcome() {
   const [userCode, setUserCode] = useState("");
@@ -32,6 +33,7 @@ export default function Welcome() {
   return (
     <main className={styles.main}>
     <Header />
+    <HeroImage />
       {/* <input
         id="codeInput"
         type="text"

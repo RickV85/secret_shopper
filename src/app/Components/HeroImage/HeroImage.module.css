@@ -1,0 +1,14 @@
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-container {
+  position: relative;
+  width: 100vw;
+  height: 47vw;
+  max-height: 354px;
+  max-width: 768px;
+  margin: 2rem 0rem;
+}
