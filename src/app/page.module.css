@@ -3,8 +3,3 @@
   flex-direction: column;
   min-height: 100vh;
 }
-
-.welcome-headline {
-  font-size: 1.6rem;
-  padding: 0rem .25rem;
-}
