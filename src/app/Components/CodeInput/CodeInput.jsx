@@ -50,7 +50,7 @@ export default function CodeInput() {
           Submit
         </button>
       </div>
-      <p>
+      <p className={styles.details}>
         If you do not have a code and would like to participate in our secret
         shopper program, please send an email to
         <br />
