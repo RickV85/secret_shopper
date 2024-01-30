@@ -32,8 +32,9 @@ export default function Welcome() {
 
   return (
     <main className={styles.main}>
-    <Header />
-    <HeroImage />
+      <Header />
+      <HeroImage />
+      <h1 className={styles["welcome-headline"]}>WELCOME, SECRET SHOPPER!</h1>
       {/* <input
         id="codeInput"
         type="text"
