@@ -8,8 +8,11 @@ import Header from "../Components/Header/Header";
 import { surveyQuestions } from "./SurveyQuestions";
 import MultiChoice from "../Components/MultiChoice/MultiChoice";
 import DateInput from "../Components/DateInput/DateInput";
+import EmailInput from "../Components/EmailInput/EmailInput";
 
 export default function Form() {
+  const [visitDate, setVisitDate] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [responses, setResponses] = useState({});
   const [imgUpload, setImgUpload] = useState(null);
   const [imgUploadName, setImgUploadName] = useState("No file chosen");
@@ -171,9 +174,16 @@ export default function Form() {
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-          <DateInput className={styles["date-input"]}/>
-          <label>Email address</label>
-          <input id="emailAddress" name="emailAddress" type="email" />
+          <DateInput
+            setVisitDate={setVisitDate}
+            divClass={styles["date-input-div"]}
+            inputClass={styles["date-input"]}
+          />
+          <EmailInput
+            setUserEmail={setUserEmail}
+            divClass={styles["email-input-div"]}
+            inputClass={styles["email-input"]}
+          />
           {/* All surveyQuestions */}
           {createSurveyDisplay()}
           {/* Photo upload */}

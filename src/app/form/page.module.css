@@ -14,12 +14,22 @@
   margin: 1.5rem;
 }
 
-.date-input,
-.email-input {
+.date-input-div,
+.email-input-div {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 1rem 0rem;
+}
+
+.date-input,
+.email-input {
+  width: 15.96369rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 0.1875rem;
+  border: 2px solid #3054a1;
+  background: #fffefa;
 }
 
 .photo-upload-div {
