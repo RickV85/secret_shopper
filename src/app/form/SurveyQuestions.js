@@ -15,6 +15,7 @@ export const surveyQuestions = [
       "Agree",
       "Disagree",
       "Strongly Disagree",
+      "Other"
     ],
   },
 ];

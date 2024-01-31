@@ -43,6 +43,10 @@ button {
   cursor: pointer;
 }
 
+input {
+  font-family: var(--montserrat);
+}
+
 h1 {
   font-weight: 500;
   line-height: normal;

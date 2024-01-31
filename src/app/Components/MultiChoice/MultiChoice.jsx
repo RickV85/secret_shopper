@@ -25,12 +25,12 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
   }
 
   return (
-    <fieldset>
-      <legend>{data.question}</legend>
+    <fieldset className={styles.fieldset}>
+      <legend className={styles.legend}>{data.question}</legend>
       {data.responseOptions.map((option) => {
         const optionId = `${data.name}-${option}`;
         return (
-          <React.Fragment key={optionId}>
+          <div className={styles["input-div"]} key={optionId}>
             <input
               id={optionId}
               name={data.name}
@@ -40,9 +40,23 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
               onChange={onChangeHandler}
             />
             <label htmlFor={optionId}>{option}</label>
-          </React.Fragment>
+          </div>
         );
       })}
+      {/* Conditionally render text input for "Other" response*/}
+      {responseState[data.name] === "Other" ? (
+        <div className={styles["other-input-div"]}>
+          <label htmlFor={`${data.name}-otherText`}>
+            Please explain below:
+          </label>
+          <input
+            type="text"
+            id={`${data.name}-otherText`}
+            name={`${data.name}-otherRes`}
+            onChange={onChangeHandler}
+          />
+        </div>
+      ) : null}
     </fieldset>
   );
 }
