@@ -5,9 +5,9 @@ import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { generateTodaysDate } from "../utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
 import MultiChoice from "../Components/MultiChoice/MultiChoice";
+import DateInput from "../Components/DateInput/DateInput";
 
 export default function Form() {
   const [responses, setResponses] = useState({});
@@ -171,18 +171,10 @@ export default function Form() {
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-          <label htmlFor="visitDate">Date of visit</label>
-          <input
-            id="visitDate"
-            name="visitDate"
-            type="date"
-            max={generateTodaysDate()}
-          />
+          <DateInput className={styles["date-input"]}/>
           <label>Email address</label>
           <input id="emailAddress" name="emailAddress" type="email" />
-          {/* Create reuseable components that render Yes/No, multiple choice questions, and text inputs
-        then map over an array of questions/available responses with type to indicate which component to use */}
-          {/* legend and fieldset for all questions */}
+          {/* All surveyQuestions */}
           {createSurveyDisplay()}
           {/* Photo upload */}
           <div id="photoInputDiv" className={styles["photo-upload-div"]}>
