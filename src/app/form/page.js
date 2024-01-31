@@ -139,6 +139,7 @@ export default function Form() {
       // error - wait for image to upload?
       return;
     }
+    // All other input checking for required fields
     try {
       const sendRes = await sendEmailPost({
         responses: responses,
@@ -170,7 +171,7 @@ export default function Form() {
           {/* Create reuseable components that render Yes/No, multiple choice questions, and text inputs
         then map over an array of questions/available responses with type to indicate which component to use */}
           {/* legend and fieldset for all questions */}
-          <fieldset>
+          {/* <fieldset>
             <legend>Is this working?</legend>
             <input
               id="q1-yes"
@@ -190,7 +191,8 @@ export default function Form() {
               onChange={handleInputChange}
             />
             <label htmlFor="no">No</label>
-          </fieldset>
+          </fieldset> */}
+          {/* Photo upload */}
           <div id="photoInputDiv" className={styles["photo-upload-div"]}>
             <label htmlFor="photoInputDiv">
               Optional - Upload a photo from your visit
@@ -213,6 +215,7 @@ export default function Form() {
               <p>{imgUploadName}</p>
             </div>
           </div>
+          {/* Additional comments */}
           <div className={styles["comment-div"]}>
             <label htmlFor="commentInput">
               Optional - Please leave any additional comments below
