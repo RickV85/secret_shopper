@@ -33,6 +33,7 @@ button {
   background: #FFFEFA;
   border: 2px solid #92bde3;
   border-radius: 3px;
+  font-family: var(--montserrat);
   font-style: normal;
   font-weight: 500;
   font-size: 1rem;
