@@ -38,8 +38,10 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
               type="radio"
               checked={responseState[data.name] === option}
               onChange={onChangeHandler}
+              className={styles["hidden-radio"]}
             />
-            <label htmlFor={optionId}>{option}</label>
+            <label htmlFor={optionId} className={styles["custom-radio"]}></label>
+            <label htmlFor={optionId} onClick={onChangeHandler}>{option}</label>
           </div>
         );
       })}

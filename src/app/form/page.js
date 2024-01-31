@@ -10,9 +10,7 @@ import { surveyQuestions } from "./SurveyQuestions";
 import MultiChoice from "../Components/MultiChoice/MultiChoice";
 
 export default function Form() {
-  const [responses, setResponses] = useState({
-    q1: "",
-  });
+  const [responses, setResponses] = useState({});
   const [imgUpload, setImgUpload] = useState(null);
   const [imgUploadName, setImgUploadName] = useState("No file chosen");
   const [imgUploadBase64, setImgUploadBase64] = useState("");
