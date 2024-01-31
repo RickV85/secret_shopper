@@ -5,7 +5,7 @@ import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { surveyQuestions } from "./SurveyQuestions";
+import { createSurveyQuestions, surveyQuestions } from "./SurveyQuestions";
 import MultiChoice from "../Components/MultiChoice/MultiChoice";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
@@ -152,6 +152,7 @@ export default function Form() {
   };
 
   const createSurveyDisplay = () => {
+    const surveyQuestions = createSurveyQuestions();
     const questionDisplay = surveyQuestions.map((q) => {
       switch (q.type) {
         case "multi":
@@ -180,7 +181,8 @@ export default function Form() {
             inputClass={styles["date-input"]}
           />
           <EmailInput
-            setUserEmail={setUserEmail}
+            setUserEmail={setUserEmail
+            }
             divClass={styles["email-input-div"]}
             inputClass={styles["email-input"]}
           />
