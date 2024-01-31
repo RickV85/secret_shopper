@@ -5,6 +5,7 @@ import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
+import { generateTodaysDate } from "../utils/utils";
 
 export default function Form() {
   const [responses, setResponses] = useState({
@@ -38,6 +39,11 @@ export default function Form() {
       }
     };
     verifyUserCode();
+  }, []);
+
+  useEffect(() => {
+    const todaysDate = generateTodaysDate();
+    console.log(todaysDate);
   }, []);
 
   useEffect(() => {
@@ -152,11 +158,20 @@ export default function Form() {
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+          <label htmlFor="visitDate">Date of visit</label>
+          <input
+            id="visitDate"
+            name="visitDate"
+            type="date"
+            max={generateTodaysDate()}
+          />
+          <label>Email address</label>
+          <input id="emailAddress" name="emailAddress" type="email" />
           {/* Create reuseable components that render Yes/No, multiple choice questions, and text inputs
         then map over an array of questions/available responses with type to indicate which component to use */}
           {/* legend and fieldset for all questions */}
-          <legend>Is this working?</legend>
           <fieldset>
+            <legend>Is this working?</legend>
             <input
               id="q1-yes"
               name="q1"
@@ -180,7 +195,7 @@ export default function Form() {
             <label htmlFor="photoInputDiv">
               Optional - Upload a photo from your visit
             </label>
-            <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <label
                 htmlFor="photoInput"
                 className={styles["image-upload-input"]}
