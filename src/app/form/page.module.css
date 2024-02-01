@@ -24,10 +24,9 @@
 
 .date-input,
 .email-input {
-  width: 15.96369rem;
+  width: 16rem;
   height: 2.25rem;
-  flex-shrink: 0;
-  border-radius: 0.1875rem;
+  border-radius: 3px;
   border: 2px solid #3054a1;
   background: #fffefa;
 }

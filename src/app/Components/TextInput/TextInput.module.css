@@ -1,0 +1,14 @@
+.div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0rem;
+}
+
+.input {
+  width: 16rem;
+  height: 2.25rem;
+  border-radius: 3px;
+  border: 2px solid #3054a1;
+  background: #fffefa;
+}

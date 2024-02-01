@@ -8,6 +8,9 @@ export const createSurveyQuestions = () => {
       "Was the restaurant’s outside appearance attractive? Nice curb appeal?",
       ["Strongly Agree", "Agree", "Disagree", "Strongly Disagree", "Other"],
     ],
+    ["text",
+      "What was your server's name?"
+  ]
   ];
 
   const questionObjects = questions.map((qData, i) => {

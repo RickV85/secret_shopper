@@ -9,6 +9,7 @@ import { createSurveyQuestions, surveyQuestions } from "./SurveyQuestions";
 import MultiChoice from "../Components/MultiChoice/MultiChoice";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
+import TextInput from "../Components/TextInput/TextInput";
 
 export default function Form() {
   const [visitDate, setVisitDate] = useState("");
@@ -164,8 +165,18 @@ export default function Form() {
               onChangeHandler={handleInputChange}
             />
           );
+        case "text":
+          return (
+            <TextInput
+              key={q.name}
+              data={q}
+              responseState={responses}
+              onChangeHandler={handleInputChange}
+            />
+          );
       }
     });
+    
     return questionDisplay;
   };
 
@@ -181,8 +192,7 @@ export default function Form() {
             inputClass={styles["date-input"]}
           />
           <EmailInput
-            setUserEmail={setUserEmail
-            }
+            setUserEmail={setUserEmail}
             divClass={styles["email-input-div"]}
             inputClass={styles["email-input"]}
           />
