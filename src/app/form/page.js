@@ -10,6 +10,7 @@ import MultiChoice from "../Components/MultiChoice/MultiChoice";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
 import TextInput from "../Components/TextInput/TextInput";
+import Comment from "../Components/Comment/Comment";
 
 export default function Form() {
   const [visitDate, setVisitDate] = useState("");
@@ -176,7 +177,7 @@ export default function Form() {
           );
       }
     });
-    
+
     return questionDisplay;
   };
 
@@ -222,20 +223,7 @@ export default function Form() {
             </div>
           </div>
           {/* Additional comments */}
-          <div className={styles["comment-div"]}>
-            <label htmlFor="commentInput">
-              Optional - Please leave any additional comments below
-            </label>
-            <textarea
-              id="commentInput"
-              name="comment"
-              type="text"
-              role="input"
-              className={styles["comment-input"]}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
+          <Comment comment={comment} setComment={setComment} />
           <button role="submit" className={styles["submit-form-btn"]}>
             SUBMIT
           </button>
