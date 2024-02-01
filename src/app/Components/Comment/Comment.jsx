@@ -1,4 +1,4 @@
-import styles from "@/app/form/page";
+import styles from "./Comment.module.css"
 
 export default function Comment({comment, setComment}) {
   return (

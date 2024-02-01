@@ -33,14 +33,13 @@
 .hidden-radio:checked + .custom-radio {
   background-color: #3054a1;
   background-clip: content-box;
-  padding: 4px;
+  padding: 0.2rem;
 }
 
 .hidden-radio {
   opacity: 0;
   position: absolute;
   cursor: pointer;
-  padding: .25rem;
 }
 
 .other-input-div {

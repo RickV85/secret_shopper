@@ -187,16 +187,8 @@ export default function Form() {
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-          <DateInput
-            setVisitDate={setVisitDate}
-            divClass={styles["date-input-div"]}
-            inputClass={styles["date-input"]}
-          />
-          <EmailInput
-            setUserEmail={setUserEmail}
-            divClass={styles["email-input-div"]}
-            inputClass={styles["email-input"]}
-          />
+          <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
+          <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
           {/* All surveyQuestions */}
           {createSurveyDisplay()}
           {/* Photo upload */}

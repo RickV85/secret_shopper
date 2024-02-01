@@ -1,12 +1,15 @@
-export default function EmailInput({ setUserEmail, divClass, inputClass }) {
+import styles from "./EmailInput.module.css"
+
+export default function EmailInput({ userEmail, setUserEmail }) {
   return (
-    <div className={divClass}>
+    <div className={styles.div}>
       <label>Email address</label>
       <input
         id="emailAddress"
         name="emailAddress"
         type="email"
-        className={inputClass}
+        className={styles.input}
+        value={userEmail}
         onChange={(e) => setUserEmail(e.target.value)}
       />
     </div>

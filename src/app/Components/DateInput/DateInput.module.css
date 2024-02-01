@@ -1,3 +1,4 @@
+
 .div {
   display: flex;
   flex-direction: column;
@@ -10,5 +11,4 @@
   height: 2.25rem;
   border-radius: 3px;
   border: 2px solid #3054a1;
-  background: #fffefa;
 }
