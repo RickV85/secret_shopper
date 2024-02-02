@@ -46,16 +46,29 @@ export default function Form() {
   }, []);
 
   useEffect(() => {
-    // Dynamically create initial response state of an object with
+    // Get savedResponses from session storage else
+    // dynamically create initial response state of an object with
     // every question as a key and an empty string to prevent uncontrolled
     // to controlled input issue
-    const initialResponsesState = {};
-    for (let i = 1; i <= surveyQuestions.length; i++) {
-      initialResponsesState[`q${i}`] = "";
+    const savedResponses = window.sessionStorage.getItem("responses");
+    console.log(savedResponses);
+    if (savedResponses && savedResponses !== "undefined") {
+      setResponses(JSON.parse(savedResponses));
+    } else {
+      const initialResponsesState = {};
+      for (let i = 1; i <= surveyQuestions.length; i++) {
+        initialResponsesState[`q${i}`] = "";
+      }
+      setResponses(initialResponsesState);
     }
-    setResponses(initialResponsesState);
     setResponseStateInitialized(true);
   }, []);
+
+  useEffect(() => {
+    if (responseStateInitialized) {
+      window.sessionStorage.setItem("responses", JSON.stringify(responses));
+    }
+  }, [responses]);
 
   const handleInputChange = (e) => {
     setResponses({
@@ -76,10 +89,12 @@ export default function Form() {
         comment: comment,
       });
       console.log(sendRes);
-      // router.push("/complete");
+      router.push("/complete");
     } catch (error) {
       console.error(error);
-      // User error messaging
+      alert(
+        "There was an error submitting your survey. Please try reloading the page and trying again."
+      );
     }
   };
 
