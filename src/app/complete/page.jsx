@@ -24,7 +24,9 @@ export default function Complete() {
               </Link>
               .
             </p>
-            <button className={styles.button}>RETURN TO HOME PAGE</button>
+            <Link href={"https://buttermilkkitchen.com"}>
+              <button className={styles.button}>RETURN TO HOME PAGE</button>
+            </Link>
           </div>
         </section>
       </main>
