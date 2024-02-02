@@ -12,6 +12,7 @@ import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
 import TextInput from "../Components/TextInput/TextInput";
 import Comment from "../Components/Comment/Comment";
+import PhotoUpload from "../Components/PhotoUpload/PhotoUpload";
 
 export default function Form() {
   const [visitDate, setVisitDate] = useState("");
@@ -62,6 +63,8 @@ export default function Form() {
   }, []);
 
   useEffect(() => {
+    // Triggers upload api call to Imgur on new photo upload
+    // Generates url of photo on Imgur
     if (imgUploadBase64 && !imgUploadImgurUrl) {
       const uploadImageToImgur = async () => {
         try {
@@ -90,13 +93,14 @@ export default function Form() {
     });
   };
 
-  const handlePhotoUpload = (event) => {
+  const handleImageUpload = (event) => {
+    // If an image has been uploaded, reset all state
+    // triggers re-upload to allow for user to change
+    // image if already uploaded
     if (imgUpload) {
-      // Error message, already uploaded?
-      return;
-    } else if (event.target.files.length > 1) {
-      // Error, only allow one photo upload
-      return;
+      setImgUpload(undefined);
+      setImgUploadBase64("");
+      setImgUploadImgurUrl("");
     }
 
     const photo = event.target.files[0];
@@ -110,8 +114,8 @@ export default function Form() {
         const img = new Image();
 
         img.onload = () => {
-          // Set the maximum height
-          const maxHeight = 600; // Maximum height
+          // Set the maximum height in px
+          const maxHeight = 1000;
 
           // Calculate the scale factor to maintain aspect ratio
           let width = img.width;
@@ -133,8 +137,8 @@ export default function Form() {
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Convert the canvas to a JPEG format with quality 80%
-          const dataURI = canvas.toDataURL("image/jpeg", 0.8);
+          // Convert the canvas to a JPEG format with quality 100%
+          const dataURI = canvas.toDataURL("image/jpeg", 1);
           // Remove prefix
           const base64 = dataURI.split(",")[1];
 
@@ -204,42 +208,28 @@ export default function Form() {
       <Header showBackBtn={false} />
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
-        {responseStateInitialized ?
-        <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-          <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
-          <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
-          {/* All surveyQuestions */}
-          {createSurveyDisplay(surveyQuestions)}
-          {/* Photo upload */}
-          <div id="photoInputDiv" className={styles["photo-upload-div"]}>
-            <label htmlFor="photoInputDiv">
-              Optional - Upload a photo from your visit
-            </label>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <label
-                htmlFor="photoInput"
-                className={styles["image-upload-input"]}
-              >
-                UPLOAD PHOTO
-              </label>
-              <input
-                id="photoInput"
-                name="photoUpload"
-                type="file"
-                onChange={(event) => handlePhotoUpload(event)}
-                accept="image/*"
-                style={{ display: "none" }}
-              />
-              <p>{imgUploadName}</p>
-            </div>
-          </div>
-          {/* Additional comments */}
-          <Comment comment={comment} setComment={setComment} />
-          <button role="submit" className={styles["submit-form-btn"]}>
-            SUBMIT
-          </button>
-        </form>
-        : <h2 className={styles["initial-load-msg"]}>Loading...please wait</h2>}
+        {responseStateInitialized ? (
+          <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+            <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
+            <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
+            {/* All surveyQuestions */}
+            {createSurveyDisplay(surveyQuestions)}
+            {/* Photo upload */}
+            <PhotoUpload
+              handleImageUpload={handleImageUpload}
+              imgUploadName={imgUploadName}
+              imgUpload={imgUpload}
+              imgUploadImgurUrl={imgUploadImgurUrl}
+            />
+            {/* Additional comments */}
+            <Comment comment={comment} setComment={setComment} />
+            <button role="submit" className={styles["submit-form-btn"]}>
+              SUBMIT
+            </button>
+          </form>
+        ) : (
+          <h2 className={styles["initial-load-msg"]}>Loading...please wait</h2>
+        )}
       </main>
     </>
   );

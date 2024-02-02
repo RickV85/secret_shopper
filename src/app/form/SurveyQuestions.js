@@ -1,5 +1,4 @@
 export const surveyQuestions = [
-  ["multi", "Is this working?", ["Yes", "No"]],
   [
     "multi",
     "Was the restaurant’s outside appearance attractive? Nice curb appeal?",
