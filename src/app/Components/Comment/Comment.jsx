@@ -1,6 +1,13 @@
-import styles from "./Comment.module.css"
+import { useEffect } from "react";
+import styles from "./Comment.module.css";
 
-export default function Comment({comment, setComment}) {
+export default function Comment({ comment, setComment }) {
+  useEffect(() => {
+    const savedComment = window.sessionStorage.getItem("comment");
+    if (savedComment) {
+      setComment(savedComment);
+    }
+  }, []);
   return (
     <div className={styles["comment-div"]}>
       <label htmlFor="commentInput">
@@ -13,7 +20,10 @@ export default function Comment({comment, setComment}) {
         role="input"
         className={styles["comment-input"]}
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        onChange={(e) => {
+          setComment(e.target.value);
+          window.sessionStorage.setItem("comment", e.target.value);
+        }}
       />
     </div>
   );
