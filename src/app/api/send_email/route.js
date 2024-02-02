@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createEmailResponseDisplay } from "@/app/utils/utils";
 
 export async function POST(req) {
   try {
@@ -11,24 +12,30 @@ export async function POST(req) {
     }
 
     let { visitDate, userEmail, responses, photoUrl, comment } = emailContent;
+    // Manager email address to send response to and have as a contact in user email
+    const managerEmail = "rickv85@gmail.com";
 
     // Format visit date
     visitDate = new Date(visitDate).toLocaleDateString("en-US");
+
+    // Create display of questions and responses as HTML
+    const surveyResultDisplay = await createEmailResponseDisplay(responses);
 
     const sendResult = await resend.batch.send([
       // Manager email
       {
         from: "Rick Vermeil <rick@rickvermeil.com>",
-        to: ["rickv85@gmail.com"],
+        to: [managerEmail],
         subject: `New Secret Shopper Response`,
         html: `
         <body>
           <h1>New Secret Shopper Response</h1>
           <h2>From: ${userEmail} on ${visitDate}</h2>
           <h3>Survey responses</h3>
-          <p>${responses}</p>
+          <section>${surveyResultDisplay}</section>
           <h3>Comments</h3>
           <p>${comment}</p>
+          <h3>Photo from visit</h3>
           <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
         </body>
         `,
@@ -40,11 +47,13 @@ export async function POST(req) {
         subject: "Thank you from Buttermilk Kitchen",
         html: `
         <body>
-          <h1>Thank you for participating!</h1>
+          <h1>Thank you for participating in our Secret Shopper program!</h1>
+          <p>Please allow 5 business days for your electronic gift card to be delivered. Please contact ${managerEmail} if you have any questions or issues.
           <h2>Here are your responses from your visit on ${visitDate}</h2>
-          <p>${responses}</p>
+          <section>${surveyResultDisplay}</section>
           <h3>Comments</h3>
           <p>${comment}</p>
+          <h3>Photo from your visit</h3>
           <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
         </body>
         `,
@@ -69,7 +78,7 @@ export async function POST(req) {
     }
     return NextResponse.json(
       { error: { message: error.message, code: errorCode }, data: null },
-      {status: status}
+      { status: status }
     );
   }
 }
