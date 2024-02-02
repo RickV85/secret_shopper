@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import styles from "./PhotoUpload.module.css";
 import NextImage from "next/image";
+import { uploadImageImgurPost } from "@/app/utils/apicalls";
 
 export default function PhotoUpload({
-  imgUpload,
-  setImgUpload,
-  imgUploadName,
-  setImgUploadName,
-  setImgUploadBase64,
   imgUploadImgurUrl,
-  setImgUploadImgurUrl,
+  setImgUploadImgurUrl
 }) {
+  const [imgUpload, setImgUpload] = useState(undefined);
+  const [imgUploadName, setImgUploadName] = useState("No file chosen");
+  const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [loadingMsg, setLoadingMsg] = useState("");
 
   useEffect(() => {
@@ -26,11 +25,35 @@ export default function PhotoUpload({
   }, [imgUploadImgurUrl, imgUpload]);
 
   useEffect(() => {
-    if (imgUploadName && imgUploadName.length > 20) {
-      const shortenedName = imgUploadName.slice(0, 20)
-      setImgUploadName(`${shortenedName}...jpeg`)
+    // Triggers upload api call to Imgur on new photo upload
+    // Generates url of photo on Imgur
+    if (imgUploadBase64 && !imgUploadImgurUrl) {
+      const uploadImageToImgur = async () => {
+        try {
+          const imgFormData = new FormData();
+          imgFormData.append("image", imgUploadBase64);
+          imgFormData.append("type", "base64");
+
+          const imgurRes = await uploadImageImgurPost(imgFormData);
+          if (imgurRes) {
+            setImgUploadImgurUrl(imgurRes.link);
+          }
+        } catch (error) {
+          console.log(error);
+          setLoadingMsg("Error uploading image, please try again.");
+        }
+      };
+
+      uploadImageToImgur();
     }
-  }, [imgUploadName])
+  }, [imgUploadBase64, imgUploadImgurUrl]);
+
+  useEffect(() => {
+    if (imgUploadName && imgUploadName.length > 20) {
+      const shortenedName = imgUploadName.slice(0, 20);
+      setImgUploadName(`${shortenedName}...jpeg`);
+    }
+  }, [imgUploadName]);
 
   const handleImageUpload = (event) => {
     const photo = event.target.files[0];
@@ -53,17 +76,13 @@ export default function PhotoUpload({
         const img = new Image();
 
         img.onload = () => {
-          // Set the maximum height in px
           const maxHeight = 1000;
-
-          // Calculate the scale factor to maintain aspect ratio
           let width = img.width;
           let height = img.height;
-
           const scaleRatio = maxHeight / height;
 
+          // Scale if the height exceeds maxHeight
           if (scaleRatio < 1) {
-            // Only scale if the height exceeds maxHeight
             width = width * scaleRatio;
             height = maxHeight;
           }
@@ -76,7 +95,7 @@ export default function PhotoUpload({
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Convert the canvas to a JPEG format with quality 100%
+          // Convert the canvas to a JPEG format with quality 80%
           const dataURI = canvas.toDataURL("image/jpeg", 0.8);
           // Remove prefix
           const base64 = dataURI.split(",")[1];
