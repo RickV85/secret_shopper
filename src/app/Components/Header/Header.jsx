@@ -2,11 +2,12 @@ import styles from "./Header.module.css";
 import BackButton from "../BackButton/BackButton";
 import Image from "next/image";
 
-export default function Header() {
+export default function Header({ showBackBtn }) {
+  const navSpacer = <div className={styles["nav-spacer"]}></div>;
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <BackButton />
+        {showBackBtn ? <BackButton /> : navSpacer}
         <Image
           src="/BK_Logo_400.jpg"
           width={170}
@@ -15,7 +16,7 @@ export default function Header() {
           alt="Buttermilk Kitchen logo"
           className={styles.logo}
         />
-        <div className={styles["nav-spacer"]}></div>
+        {navSpacer}
       </nav>
     </header>
   );

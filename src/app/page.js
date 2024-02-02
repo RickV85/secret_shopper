@@ -6,7 +6,7 @@ import CodeInput from "./Components/CodeInput/CodeInput";
 export default function Welcome() {
   return (
     <>
-      <Header />
+      <Header showBackBtn={true} />
       <main className={styles.main}>
         <HeroImage />
         <CodeInput />

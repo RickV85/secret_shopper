@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 export default function Complete() {
   return (
     <>
-      <Header />
+      <Header showBackBtn={false} />
       <main className={styles.main}>
         <HeroImage />
         <section className={styles["thank-you-section"]}>

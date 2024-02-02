@@ -183,7 +183,7 @@ export default function Form() {
 
   return (
     <>
-      <Header />
+      <Header showBackBtn={false} />
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
