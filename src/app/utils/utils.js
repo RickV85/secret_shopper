@@ -12,3 +12,4 @@ export const createSurveyQuestions = (questions) => {
 
   return questionObjects;
 };
+

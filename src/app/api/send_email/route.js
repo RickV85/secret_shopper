@@ -13,7 +13,7 @@ export async function POST(req) {
     let { visitDate, userEmail, responses, photoUrl, comment } = emailContent;
 
     // Format visit date
-    visitDate = visitDate.toLocaleDateString("en-US");
+    visitDate = new Date(visitDate).toLocaleDateString("en-US");
 
     const sendResult = await resend.batch.send([
       // Manager email
@@ -28,9 +28,9 @@ export async function POST(req) {
           <h3>Survey responses</h3>
           <p>${responses}</p>
           <h3>Comments</h3>
-          <p>${comments}</p>
+          <p>${comment}</p>
           <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
-        </ body>
+        </body>
         `,
       },
       // User email
@@ -44,9 +44,9 @@ export async function POST(req) {
           <h2>Here are your responses from your visit on ${visitDate}</h2>
           <p>${responses}</p>
           <h3>Comments</h3>
-          <p>${comments}</p>
+          <p>${comment}</p>
           <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
-        </ body>
+        </body>
         `,
       },
     ]);
@@ -69,7 +69,7 @@ export async function POST(req) {
     }
     return NextResponse.json(
       { error: { message: error.message, code: errorCode }, data: null },
-      status
+      {status: status}
     );
   }
 }
