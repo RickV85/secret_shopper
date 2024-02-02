@@ -65,7 +65,7 @@ export async function POST(req) {
       throw new Error("Failure - Resend failed");
     }
 
-    return NextResponse.json({ data: { message: "Email successfully sent" } });
+    return NextResponse.json({ data: { message: "Success - Emails successfully sent" } });
   } catch (error) {
     let status = 500;
     let errorCode = "UNKNOWN_ERROR";

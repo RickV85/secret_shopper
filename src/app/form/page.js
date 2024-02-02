@@ -89,7 +89,10 @@ export default function Form() {
         comment: comment,
       });
       console.log(sendRes);
-      router.push("/complete");
+      if (sendRes.startsWith("Success")) {
+        window.sessionStorage.clear();
+        router.push("/complete");
+      }
     } catch (error) {
       console.error(error);
       alert(
