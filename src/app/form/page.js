@@ -5,7 +5,7 @@ import { sendEmailPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { createSurveyDisplay } from "@/app/utils/utils";
+import { checkResponses, createSurveyDisplay } from "@/app/utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
@@ -24,7 +24,7 @@ export default function Form() {
   const router = useRouter();
 
   useEffect(() => {
-    // Verifies that a user has the code and cannot directly nav
+    // Verifies that a user has the code, prevents direct nav
     const verifyUserCode = async () => {
       try {
         const userCode = await window.sessionStorage.getItem("code");
@@ -64,6 +64,9 @@ export default function Form() {
   }, []);
 
   useEffect(() => {
+    // Sets responses as they are updated by user
+    // only after initial blank responses created
+    // to prevent initial overwrite
     if (responseStateInitialized) {
       window.sessionStorage.setItem("responses", JSON.stringify(responses));
     }
@@ -78,8 +81,16 @@ export default function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitMsg("Submitting your survey...");
-    // All other input checking for required fields
+
+    // Check for responses on date, email and all survey questions
+    // have a response. No other checking for specifics of responses.
+    const formIncompleteError = checkResponses(visitDate, userEmail, responses);
+    if (formIncompleteError) {
+      return;
+    } else {
+      setSubmitMsg("Submitting your survey...");
+    }
+
     try {
       const sendRes = await sendEmailPost({
         visitDate: visitDate,
@@ -92,7 +103,6 @@ export default function Form() {
       if (sendRes.startsWith("Success")) {
         window.sessionStorage.clear();
         router.push("/complete");
-        setSubmitMsg("");
       }
     } catch (error) {
       console.error(error);

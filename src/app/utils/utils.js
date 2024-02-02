@@ -16,7 +16,11 @@ export const createSurveyQuestions = (questions) => {
   return questionObjects;
 };
 
-export const createSurveyDisplay = (questions, responseState, inputChangeHandler) => {
+export const createSurveyDisplay = (
+  questions,
+  responseState,
+  inputChangeHandler
+) => {
   const surveyQuestions = createSurveyQuestions(questions);
   const questionDisplay = surveyQuestions.map((q) => {
     switch (q.type) {
@@ -61,4 +65,24 @@ export const createEmailResponseDisplay = (responses) => {
     }
   });
   return responseDisplay;
+};
+
+export const checkResponses = (date, email, responses) => {
+  if (!date) {
+    alert("Please enter a date for your visit.");
+    return true;
+  } else if (!email) {
+    alert("Please enter your email address.");
+    return true;
+  }
+  for (const res in responses) {
+    if (!responses[res]) {
+      const questionIndex = +res.split("q")[1] - 1;
+      alert(
+        `Please enter a response for question - "${surveyQuestions[questionIndex][1]}"`
+      );
+      return true;
+    }
+  }
+  return false;
 };
