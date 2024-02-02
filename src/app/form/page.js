@@ -204,13 +204,12 @@ export default function Form() {
       <Header showBackBtn={false} />
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
+        {responseStateInitialized ?
         <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
           <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
           <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
           {/* All surveyQuestions */}
-          {responseStateInitialized
-            ? createSurveyDisplay(surveyQuestions)
-            : null}
+          {createSurveyDisplay(surveyQuestions)}
           {/* Photo upload */}
           <div id="photoInputDiv" className={styles["photo-upload-div"]}>
             <label htmlFor="photoInputDiv">
@@ -240,6 +239,7 @@ export default function Form() {
             SUBMIT
           </button>
         </form>
+        : <h2 className={styles["initial-load-msg"]}>Loading...please wait</h2>}
       </main>
     </>
   );
