@@ -1,6 +1,13 @@
-import styles from "./EmailInput.module.css"
+import { useEffect } from "react";
+import styles from "./EmailInput.module.css";
 
 export default function EmailInput({ userEmail, setUserEmail }) {
+  useEffect(() => {
+    const savedUserEmail = window.sessionStorage.getItem("userEmail");
+    if (savedUserEmail) {
+      setUserEmail(savedUserEmail);
+    }
+  }, []);
   return (
     <div className={styles.div}>
       <label>Email address</label>
@@ -10,7 +17,10 @@ export default function EmailInput({ userEmail, setUserEmail }) {
         type="email"
         className={styles.input}
         value={userEmail}
-        onChange={(e) => setUserEmail(e.target.value)}
+        onChange={(e) => {
+          setUserEmail(e.target.value);
+          window.sessionStorage.setItem("userEmail", e.target.value);
+        }}
       />
     </div>
   );
