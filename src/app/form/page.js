@@ -142,8 +142,11 @@ export default function Form() {
     // All other input checking for required fields
     try {
       const sendRes = await sendEmailPost({
+        visitDate: visitDate,
+        userEmail: userEmail,
         responses: responses,
         photoUrl: imgUploadImgurUrl,
+        comment: comment
       });
       console.log(sendRes);
       // router.push("/complete");
