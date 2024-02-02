@@ -20,19 +20,19 @@ export default function Form() {
     useState(false);
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
   const [comment, setComment] = useState("");
+  const [submitMsg, setSubmitMsg] = useState("");
   const router = useRouter();
 
   useEffect(() => {
+    // Verifies that a user has the code and cannot directly nav
     const verifyUserCode = async () => {
       try {
         const userCode = await window.sessionStorage.getItem("code");
         const isAuthorized = await verifyCode(userCode);
 
         if (!isAuthorized) {
-          alert("Please return to the welcome page and re-enter your code.");
+          alert("Please return to the welcome page and enter your code.");
           router.push("/");
-        } else {
-          console.log("userCode verified");
         }
       } catch (error) {
         console.error(error);
@@ -51,7 +51,6 @@ export default function Form() {
     // every question as a key and an empty string to prevent uncontrolled
     // to controlled input issue
     const savedResponses = window.sessionStorage.getItem("responses");
-    console.log(savedResponses);
     if (savedResponses && savedResponses !== "undefined") {
       setResponses(JSON.parse(savedResponses));
     } else {
@@ -79,6 +78,7 @@ export default function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitMsg("Submitting your survey...");
     // All other input checking for required fields
     try {
       const sendRes = await sendEmailPost({
@@ -92,11 +92,13 @@ export default function Form() {
       if (sendRes.startsWith("Success")) {
         window.sessionStorage.clear();
         router.push("/complete");
+        setSubmitMsg("");
       }
     } catch (error) {
       console.error(error);
-      alert(
-        "There was an error submitting your survey. Please try reloading the page and trying again."
+      setSubmitMsg(
+        `There was an error submitting your survey. 
+        Please try reloading the page and resubmitting`
       );
     }
   };
@@ -119,9 +121,15 @@ export default function Form() {
             />
             {/* Additional comments */}
             <Comment comment={comment} setComment={setComment} />
-            <button role="submit" className={styles["submit-form-btn"]}>
-              SUBMIT
-            </button>
+            {submitMsg ? (
+              <div className={styles["submit-msg-div"]}>
+                <p>{submitMsg}</p>
+              </div>
+            ) : (
+              <button role="submit" className={styles["submit-form-btn"]}>
+                SUBMIT
+              </button>
+            )}
           </form>
         ) : (
           <h2 className={styles["initial-load-msg"]}>Loading...please wait</h2>
