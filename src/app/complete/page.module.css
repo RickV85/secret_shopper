@@ -1,0 +1,22 @@
+.main {
+  min-height: 100vh;
+}
+
+.thank-you-section {
+  margin: 1rem;
+}
+
+.headline {
+  font-size: 1.6rem;
+  padding: 0rem 0.25rem;
+}
+
+.thank-you-div {
+  text-align: center;
+  padding: 1.5rem 2rem;
+}
+
+.button {
+  width: 17.5rem;
+  height: 2.25rem;
+}
