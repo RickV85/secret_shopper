@@ -4,6 +4,8 @@
 }
 
 .photo-upload-div {
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -22,6 +24,10 @@
   width: 11.5rem;
   height: 3rem;
   margin: 1rem 0rem;
+}
+
+.photo-name-div {
+  width: 15rem;
 }
 
 .uploading-msg {

@@ -1,5 +1,7 @@
 import { Question } from "../Classes/Question";
 import { surveyQuestions } from "../form/SurveyQuestions";
+import MultiChoice from "../Components/MultiChoice/MultiChoice";
+import TextInput from "../Components/TextInput/TextInput";
 
 export const generateTodaysDate = () => {
   const today = new Date().toISOString().split("T")[0];
@@ -12,6 +14,34 @@ export const createSurveyQuestions = (questions) => {
   });
 
   return questionObjects;
+};
+
+export const createSurveyDisplay = (questions, responseState, inputChangeHandler) => {
+  const surveyQuestions = createSurveyQuestions(questions);
+  const questionDisplay = surveyQuestions.map((q) => {
+    switch (q.type) {
+      case "multi":
+        return (
+          <MultiChoice
+            key={q.name}
+            data={q}
+            responseState={responseState}
+            onChangeHandler={inputChangeHandler}
+          />
+        );
+      case "text":
+        return (
+          <TextInput
+            key={q.name}
+            data={q}
+            responseState={responseState}
+            onChangeHandler={inputChangeHandler}
+          />
+        );
+    }
+  });
+
+  return questionDisplay;
 };
 
 export const createEmailResponseDisplay = (responses) => {

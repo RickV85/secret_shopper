@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styles from "./PhotoUpload.module.css";
 import NextImage from "next/image";
 
@@ -10,17 +11,38 @@ export default function PhotoUpload({
   imgUploadImgurUrl,
   setImgUploadImgurUrl,
 }) {
+  const [loadingMsg, setLoadingMsg] = useState("");
+
+  useEffect(() => {
+    if (imgUpload && imgUploadImgurUrl === "") {
+      setLoadingMsg("Uploading photo, please wait...");
+    } else if (imgUploadImgurUrl === undefined) {
+      setLoadingMsg(
+        "Error uploading your photo. Please try again. If the issues persists, please try a smaller or different file."
+      );
+    } else {
+      setLoadingMsg("");
+    }
+  }, [imgUploadImgurUrl, imgUpload]);
+
+  useEffect(() => {
+    if (imgUploadName && imgUploadName.length > 20) {
+      const shortenedName = imgUploadName.slice(0, 20)
+      setImgUploadName(`${shortenedName}...jpeg`)
+    }
+  }, [imgUploadName])
+
   const handleImageUpload = (event) => {
+    const photo = event.target.files[0];
+
     // If an image has been uploaded, reset all state
     // triggers re-upload to allow for user to change
     // image if already uploaded
-    if (imgUpload) {
+    if (imgUpload && photo) {
       setImgUpload(undefined);
       setImgUploadBase64("");
       setImgUploadImgurUrl("");
     }
-
-    const photo = event.target.files[0];
 
     if (photo) {
       setImgUpload(photo);
@@ -55,7 +77,7 @@ export default function PhotoUpload({
           ctx.drawImage(img, 0, 0, width, height);
 
           // Convert the canvas to a JPEG format with quality 100%
-          const dataURI = canvas.toDataURL("image/jpeg", 1);
+          const dataURI = canvas.toDataURL("image/jpeg", 0.8);
           // Remove prefix
           const base64 = dataURI.split(",")[1];
 
@@ -85,9 +107,13 @@ export default function PhotoUpload({
           accept="image/*"
           style={{ display: "none" }}
         />
-        <p>{imgUploadName}</p>
+        <div className={styles["photo-name-div"]}>
+          <p>{imgUploadName}</p>
+        </div>
       </div>
-      {imgUpload && !imgUploadImgurUrl ? <p className={styles["uploading-msg"]}>Uploading image, please wait...</p> : null}
+      {loadingMsg ? (
+        <p className={styles["uploading-msg"]}>{loadingMsg}</p>
+      ) : null}
       {imgUploadImgurUrl ? (
         <div className={styles["uploaded-photo"]}>
           <NextImage

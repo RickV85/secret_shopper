@@ -5,12 +5,10 @@ import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { createSurveyQuestions } from "@/app/utils/utils";
+import { createSurveyDisplay } from "@/app/utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
-import MultiChoice from "../Components/MultiChoice/MultiChoice";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
-import TextInput from "../Components/TextInput/TextInput";
 import Comment from "../Components/Comment/Comment";
 import PhotoUpload from "../Components/PhotoUpload/PhotoUpload";
 
@@ -116,33 +114,33 @@ export default function Form() {
     }
   };
 
-  const createSurveyDisplay = (questions) => {
-    const surveyQuestions = createSurveyQuestions(questions);
-    const questionDisplay = surveyQuestions.map((q) => {
-      switch (q.type) {
-        case "multi":
-          return (
-            <MultiChoice
-              key={q.name}
-              data={q}
-              responseState={responses}
-              onChangeHandler={handleInputChange}
-            />
-          );
-        case "text":
-          return (
-            <TextInput
-              key={q.name}
-              data={q}
-              responseState={responses}
-              onChangeHandler={handleInputChange}
-            />
-          );
-      }
-    });
+  // const createSurveyDisplay = (questions) => {
+  //   const surveyQuestions = createSurveyQuestions(questions);
+  //   const questionDisplay = surveyQuestions.map((q) => {
+  //     switch (q.type) {
+  //       case "multi":
+  //         return (
+  //           <MultiChoice
+  //             key={q.name}
+  //             data={q}
+  //             responseState={responses}
+  //             onChangeHandler={handleInputChange}
+  //           />
+  //         );
+  //       case "text":
+  //         return (
+  //           <TextInput
+  //             key={q.name}
+  //             data={q}
+  //             responseState={responses}
+  //             onChangeHandler={handleInputChange}
+  //           />
+  //         );
+  //     }
+  //   });
 
-    return questionDisplay;
-  };
+  //   return questionDisplay;
+  // };
 
   return (
     <>
@@ -154,7 +152,7 @@ export default function Form() {
             <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
             <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
             {/* All surveyQuestions */}
-            {createSurveyDisplay(surveyQuestions)}
+            {createSurveyDisplay(surveyQuestions, responses, handleInputChange)}
             {/* Photo upload */}
             <PhotoUpload
               imgUpload={imgUpload}
