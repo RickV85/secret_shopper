@@ -1,21 +1,10 @@
-import { Question } from "../Classes/Question";
+export const surveyQuestions = [
+  ["multi", "Is this working?", ["Yes", "No"]],
+  [
+    "multi",
+    "Was the restaurant’s outside appearance attractive? Nice curb appeal?",
+    ["Strongly Agree", "Agree", "Disagree", "Strongly Disagree", "Other"],
+  ],
+  ["text", "What was your server's name?"],
+];
 
-export const createSurveyQuestions = () => {
-  const questions = [
-    ["multi", "Is this working?", ["Yes", "No"]],
-    [
-      "multi",
-      "Was the restaurant’s outside appearance attractive? Nice curb appeal?",
-      ["Strongly Agree", "Agree", "Disagree", "Strongly Disagree", "Other"],
-    ],
-    ["text",
-      "What was your server's name?"
-  ]
-  ];
-
-  const questionObjects = questions.map((qData, i) => {
-    return new Question(i + 1, ...qData);
-  })
-
-  return questionObjects;
-};

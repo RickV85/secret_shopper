@@ -12,18 +12,6 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
   // responseState: state object of all form questions and responses in Form
   // onChangeHandler: state setting func from Form
 
-  {
-    /* <input
-        id="q1-yes"
-        name="q1"
-        value={"Yes"}
-        type="radio"
-        checked={responseState["q1"] === "Yes"}
-        onChange={onChangeHandler}
-      />
-      <label htmlFor="q1-yes">Yes</label> */
-  }
-
   return (
     <fieldset className={styles.fieldset}>
       <legend className={styles.legend}>{data.question}</legend>

@@ -5,7 +5,8 @@ import { sendEmailPost, uploadImageImgurPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { createSurveyQuestions } from "./SurveyQuestions";
+import { createSurveyQuestions } from "@/app/utils/utils";
+import { surveyQuestions } from "./SurveyQuestions";
 import MultiChoice from "../Components/MultiChoice/MultiChoice";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
@@ -15,8 +16,10 @@ import Comment from "../Components/Comment/Comment";
 export default function Form() {
   const [visitDate, setVisitDate] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [responses, setResponses] = useState({});
-  const [imgUpload, setImgUpload] = useState(null);
+  const [responses, setResponses] = useState(undefined);
+  const [responseStateInitialized, setResponseStateInitialized] =
+    useState(false);
+  const [imgUpload, setImgUpload] = useState(undefined);
   const [imgUploadName, setImgUploadName] = useState("No file chosen");
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [imgUploadImgurUrl, setImgUploadImgurUrl] = useState("");
@@ -44,6 +47,18 @@ export default function Form() {
       }
     };
     verifyUserCode();
+  }, []);
+
+  useEffect(() => {
+    // Dynamically create initial response state of an object with
+    // every question as a key and an empty string to prevent uncontrolled
+    // to controlled input issue
+    const initialResponsesState = {};
+    for (let i = 1; i <= surveyQuestions.length; i++) {
+      initialResponsesState[`q${i}`] = "";
+    }
+    setResponses(initialResponsesState);
+    setResponseStateInitialized(true);
   }, []);
 
   useEffect(() => {
@@ -146,7 +161,7 @@ export default function Form() {
         userEmail: userEmail,
         responses: responses,
         photoUrl: imgUploadImgurUrl,
-        comment: comment
+        comment: comment,
       });
       console.log(sendRes);
       // router.push("/complete");
@@ -156,8 +171,8 @@ export default function Form() {
     }
   };
 
-  const createSurveyDisplay = () => {
-    const surveyQuestions = createSurveyQuestions();
+  const createSurveyDisplay = (questions) => {
+    const surveyQuestions = createSurveyQuestions(questions);
     const questionDisplay = surveyQuestions.map((q) => {
       switch (q.type) {
         case "multi":
@@ -193,7 +208,9 @@ export default function Form() {
           <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
           <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
           {/* All surveyQuestions */}
-          {createSurveyDisplay()}
+          {responseStateInitialized
+            ? createSurveyDisplay(surveyQuestions)
+            : null}
           {/* Photo upload */}
           <div id="photoInputDiv" className={styles["photo-upload-div"]}>
             <label htmlFor="photoInputDiv">

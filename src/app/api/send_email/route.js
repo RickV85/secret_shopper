@@ -3,38 +3,52 @@ import { Resend } from "resend";
 
 export async function POST(req) {
   try {
+    const resend = new Resend(process.env.RESEND_TEST_API_KEY);
     const emailContent = await req.json();
 
     if (!emailContent) {
       throw new Error("Failure - no emailContent");
     }
 
-    const { responses, photoUrl } = emailContent;
+    let { visitDate, userEmail, responses, photoUrl, comment } = emailContent;
 
-    const resend = new Resend(process.env.RESEND_TEST_API_KEY);
+    // Format visit date
+    visitDate = visitDate.toLocaleDateString("en-US");
 
     const sendResult = await resend.batch.send([
+      // Manager email
       {
-        from: "Rick <rick@rickvermeil.com>",
+        from: "Rick Vermeil <rick@rickvermeil.com>",
         to: ["rickv85@gmail.com"],
-        subject: "hello world",
+        subject: `New Secret Shopper Response`,
         html: `
         <body>
-          <h1>it works!</h1>
-          <p>${responses.q1}</p>
+          <h1>New Secret Shopper Response</h1>
+          <h2>From: ${userEmail} on ${visitDate}</h2>
+          <h3>Survey responses</h3>
+          <p>${responses}</p>
+          <h3>Comments</h3>
+          <p>${comments}</p>
           <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
         </ body>
         `,
       },
-      // SEND MULTIPLE EMAILS WITH BATCH.SEND -
-      // USE TO SEND A COPY TO MANAGER AND RESPONDENT
-
-      // {
-      //   from: "Acme <onboarding@resend.dev>",
-      //   to: ["bar@outlook.com"],
-      //   subject: "world hello",
-      //   html: "<p>it works!</p>",
-      // },
+      // User email
+      {
+        from: "Rick Vermeil <rick@rickvermeil.com>",
+        to: [userEmail],
+        subject: "Thank you from Buttermilk Kitchen",
+        html: `
+        <body>
+          <h1>Thank you for participating!</h1>
+          <h2>Here are your responses from your visit on ${visitDate}</h2>
+          <p>${responses}</p>
+          <h3>Comments</h3>
+          <p>${comments}</p>
+          <img src="${photoUrl}" alt="Secret shopper uploaded photo" />
+        </ body>
+        `,
+      },
     ]);
 
     if (sendResult.error) {
