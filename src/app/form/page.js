@@ -93,65 +93,6 @@ export default function Form() {
     });
   };
 
-  const handleImageUpload = (event) => {
-    // If an image has been uploaded, reset all state
-    // triggers re-upload to allow for user to change
-    // image if already uploaded
-    if (imgUpload) {
-      setImgUpload(undefined);
-      setImgUploadBase64("");
-      setImgUploadImgurUrl("");
-    }
-
-    const photo = event.target.files[0];
-
-    if (photo) {
-      setImgUpload(photo);
-      setImgUploadName(photo.name);
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        const img = new Image();
-
-        img.onload = () => {
-          // Set the maximum height in px
-          const maxHeight = 1000;
-
-          // Calculate the scale factor to maintain aspect ratio
-          let width = img.width;
-          let height = img.height;
-
-          const scaleRatio = maxHeight / height;
-
-          if (scaleRatio < 1) {
-            // Only scale if the height exceeds maxHeight
-            width = width * scaleRatio;
-            height = maxHeight;
-          }
-
-          // Resize the canvas to the new dimensions
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-          canvas.width = width;
-          canvas.height = height;
-
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Convert the canvas to a JPEG format with quality 100%
-          const dataURI = canvas.toDataURL("image/jpeg", 1);
-          // Remove prefix
-          const base64 = dataURI.split(",")[1];
-
-          setImgUploadBase64(base64);
-        };
-
-        img.src = e.target.result;
-      };
-
-      reader.readAsDataURL(photo);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (imgUpload && !imgUploadImgurUrl) {
@@ -216,10 +157,13 @@ export default function Form() {
             {createSurveyDisplay(surveyQuestions)}
             {/* Photo upload */}
             <PhotoUpload
-              handleImageUpload={handleImageUpload}
-              imgUploadName={imgUploadName}
               imgUpload={imgUpload}
+              setImgUpload={setImgUpload}
+              imgUploadName={imgUploadName}
+              setImgUploadName={setImgUploadName}
+              setImgUploadBase64={setImgUploadBase64}
               imgUploadImgurUrl={imgUploadImgurUrl}
+              setImgUploadImgurUrl={setImgUploadImgurUrl}
             />
             {/* Additional comments */}
             <Comment comment={comment} setComment={setComment} />
