@@ -5,7 +5,7 @@ import { uploadImageImgurPost } from "@/app/utils/apicalls";
 
 export default function PhotoUpload({
   imgUploadImgurUrl,
-  setImgUploadImgurUrl
+  setImgUploadImgurUrl,
 }) {
   const [imgUpload, setImgUpload] = useState(undefined);
   const [imgUploadName, setImgUploadName] = useState("No file chosen");
@@ -76,7 +76,7 @@ export default function PhotoUpload({
         const img = new Image();
 
         img.onload = () => {
-          const maxHeight = 1000;
+          const maxHeight = 800;
           let width = img.width;
           let height = img.height;
           const scaleRatio = maxHeight / height;
@@ -95,8 +95,19 @@ export default function PhotoUpload({
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Convert the canvas to a JPEG format with quality 80%
-          const dataURI = canvas.toDataURL("image/jpeg", 0.8);
+          // Determine the quality based on the file size
+          let quality;
+          if (photo.size < 1024 * 1024) {
+            // Image size < 1MB - 90%
+            quality = 0.9;
+          } else if (photo.size < 5 * 1024 * 1024) {
+            // Image size between 1MB and 5MB - 70%
+            quality = 0.7;
+          } else {
+            quality = 0.5;
+          }
+
+          const dataURI = canvas.toDataURL("image/jpeg", quality);
           // Remove prefix
           const base64 = dataURI.split(",")[1];
 
