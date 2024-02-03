@@ -133,7 +133,8 @@ export default function PhotoUpload({
           name="photoUpload"
           type="file"
           onChange={(event) => handleImageUpload(event)}
-          accept="image/*"
+          capture="environment"
+          accept="image/jpeg"
           style={{ display: "none" }}
         />
         <div className={styles["photo-name-div"]}>
