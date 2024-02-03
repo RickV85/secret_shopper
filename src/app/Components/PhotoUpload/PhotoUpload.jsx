@@ -76,7 +76,7 @@ export default function PhotoUpload({
         const img = new Image();
 
         img.onload = () => {
-          const maxHeight = 800;
+          const maxHeight = 600;
           let width = img.width;
           let height = img.height;
           const scaleRatio = maxHeight / height;
@@ -96,13 +96,13 @@ export default function PhotoUpload({
           ctx.drawImage(img, 0, 0, width, height);
 
           // Determine the quality factor based on the original file size
-          let quality = 0.7;
+          let quality = 0.6;
           if (photo.size > 5000000) {
-            // If the file size is greater than 5MB - 50%
-            quality = 0.5;
+            // If the file size is greater than 5MB - 40%
+            quality = 0.4;
           } else if (photo.size > 10000000) {
-            // If the file size is greater than 10MB - 30%
-            quality = 0.3;
+            // If the file size is greater than 10MB - 20%
+            quality = 0.2;
           }
 
           // Convert the canvas to a JPEG format
@@ -133,7 +133,6 @@ export default function PhotoUpload({
           name="photoUpload"
           type="file"
           onChange={(event) => handleImageUpload(event)}
-          capture="environment"
           accept="image/jpeg"
           style={{ display: "none" }}
         />
