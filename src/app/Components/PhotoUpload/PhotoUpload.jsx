@@ -55,6 +55,7 @@ export default function PhotoUpload({
     }
   }, [imgUploadName]);
 
+  // REFACTOR THIS ONCE iOS issue fixed
   const handleImageUpload = async (event) => {
     const photo = event.target.files[0];
 
@@ -69,24 +70,20 @@ export default function PhotoUpload({
   
     if (!photo) return;
   
-    // Check if the image is HEIC format
     if (photo.type === "image/heic" || photo.name.endsWith('.HEIC')) {
       try {
-        // Convert HEIC to JPEG
         const convertedBlob = await heic2any({
           blob: photo,
           toType: "image/jpeg",
-          quality: 0.8 // Adjust quality as needed
+          quality: 0.25
         });
   
-        // Proceed with the converted JPEG blob
         processImage(convertedBlob);
       } catch (error) {
         console.error("Error converting HEIC to JPEG:", error);
         setLoadingMsg("HEIC photo conversion failed. Please try uploading again.")
       }
     } else {
-      // If not HEIC, proceed with the original image file
       processImage(photo);
     }
   };
@@ -94,8 +91,6 @@ export default function PhotoUpload({
 
 // REFACTOR THIS IN TO UTILS ONCE iOS issue fixed
   const processImage = (photo) => {
-
-
     if (photo) {
       setImgUpload(photo);
       setImgUploadName(photo.name);
