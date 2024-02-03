@@ -16,12 +16,10 @@ export default function DateInput({ visitDate, setVisitDate }) {
     const selectedDate = e.target.value;
     if (selectedDate > todaysDate) {
       alert("Please do not pick a day in the future.");
-      setVisitDate("");
-      window.sessionStorage.setItem("visitDate", "");
       return;
     }
-    setVisitDate(e.target.value);
-    window.sessionStorage.setItem("visitDate", e.target.value);
+    setVisitDate(selectedDate);
+    window.sessionStorage.setItem("visitDate", selectedDate);
   };
 
   return (
