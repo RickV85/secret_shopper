@@ -5,7 +5,7 @@ import { sendEmailPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { checkResponses, createSurveyDisplay } from "@/app/utils/utils";
+import { checkSurveySubmit, createSurveyDisplay } from "@/app/utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
@@ -33,7 +33,23 @@ export default function Form() {
         if (!isAuthorized) {
           alert("Please return to the welcome page and enter your code.");
           router.push("/");
+          return;
         }
+        // Get savedResponses from session storage else
+        // dynamically create initial response state of an object with
+        // every question as a key and an empty string to prevent uncontrolled
+        // to controlled input issue
+        const savedResponses = window.sessionStorage.getItem("responses");
+        if (savedResponses && savedResponses !== "undefined") {
+          setResponses(JSON.parse(savedResponses));
+        } else {
+          const initialResponsesState = {};
+          for (let i = 1; i <= surveyQuestions.length; i++) {
+            initialResponsesState[`q${i}`] = "";
+          }
+          setResponses(initialResponsesState);
+        }
+        setResponseStateInitialized(true);
       } catch (error) {
         console.error(error);
         alert(
@@ -43,24 +59,6 @@ export default function Form() {
       }
     };
     verifyUserCode();
-  }, []);
-
-  useEffect(() => {
-    // Get savedResponses from session storage else
-    // dynamically create initial response state of an object with
-    // every question as a key and an empty string to prevent uncontrolled
-    // to controlled input issue
-    const savedResponses = window.sessionStorage.getItem("responses");
-    if (savedResponses && savedResponses !== "undefined") {
-      setResponses(JSON.parse(savedResponses));
-    } else {
-      const initialResponsesState = {};
-      for (let i = 1; i <= surveyQuestions.length; i++) {
-        initialResponsesState[`q${i}`] = "";
-      }
-      setResponses(initialResponsesState);
-    }
-    setResponseStateInitialized(true);
   }, []);
 
   useEffect(() => {
@@ -81,10 +79,13 @@ export default function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // Check for responses on date, email and all survey questions
     // have a response. No other checking for specifics of responses.
-    const formIncompleteError = checkResponses(visitDate, userEmail, responses);
+    const formIncompleteError = checkSurveySubmit(
+      visitDate,
+      userEmail,
+      responses
+    );
     if (formIncompleteError) {
       return;
     } else {
@@ -120,16 +121,15 @@ export default function Form() {
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         {responseStateInitialized ? (
           <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+            {/* REQUIRED - Date, email and all surveyQuestions */}
             <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
             <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
-            {/* All surveyQuestions */}
             {createSurveyDisplay(surveyQuestions, responses, handleInputChange)}
-            {/* Photo upload */}
+            {/* OPTIONAL - Photo upload and additional comments*/}
             <PhotoUpload
               imgUploadImgurUrl={imgUploadImgurUrl}
               setImgUploadImgurUrl={setImgUploadImgurUrl}
             />
-            {/* Additional comments */}
             <Comment comment={comment} setComment={setComment} />
             {submitMsg ? (
               <div className={styles["submit-msg-div"]}>

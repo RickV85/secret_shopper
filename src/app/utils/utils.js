@@ -48,26 +48,7 @@ export const createSurveyDisplay = (
   return questionDisplay;
 };
 
-export const createEmailResponseDisplay = (responses) => {
-  let responseDisplay = "";
-  surveyQuestions.forEach((q, i) => {
-    let element;
-    const qKey = `q${i + 1}`;
-    const userResponse = responses[qKey];
-    if (userResponse) {
-      element = `
-        <div>
-          <h4>${q[1]}</h4>
-          <p>${userResponse}</p>
-        </div>
-      `;
-      responseDisplay += element;
-    }
-  });
-  return responseDisplay;
-};
-
-export const checkResponses = (date, email, responses) => {
+export const checkSurveySubmit = (date, email, responses) => {
   if (!date) {
     alert("Please enter a date for your visit.");
     return true;
@@ -85,4 +66,23 @@ export const checkResponses = (date, email, responses) => {
     }
   }
   return false;
+};
+
+export const createEmailResponseDisplay = (responses) => {
+  let responseDisplay = "";
+  surveyQuestions.forEach((q, i) => {
+    let element;
+    const qKey = `q${i + 1}`;
+    const userResponse = responses[qKey];
+    if (userResponse) {
+      element = `
+        <div>
+          <h4>${q[1]}</h4>
+          <p>${userResponse}</p>
+        </div>
+      `;
+      responseDisplay += element;
+    }
+  });
+  return responseDisplay;
 };
