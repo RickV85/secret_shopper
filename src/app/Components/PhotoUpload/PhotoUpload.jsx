@@ -55,7 +55,7 @@ export default function PhotoUpload({
     }
   }, [imgUploadName]);
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const photo = event.target.files[0];
 
     // If an image has been uploaded, reset all state
@@ -66,6 +66,35 @@ export default function PhotoUpload({
       setImgUploadBase64("");
       setImgUploadImgurUrl("");
     }
+  
+    if (!photo) return;
+  
+    // Check if the image is HEIC format
+    if (photo.type === "image/heic" || photo.name.endsWith('.HEIC')) {
+      try {
+        // Convert HEIC to JPEG
+        const convertedBlob = await heic2any({
+          blob: photo,
+          toType: "image/jpeg",
+          quality: 0.8 // Adjust quality as needed
+        });
+  
+        // Proceed with the converted JPEG blob
+        processImage(convertedBlob);
+      } catch (error) {
+        console.error("Error converting HEIC to JPEG:", error);
+        setLoadingMsg("HEIC photo conversion failed. PLease try uploading again.")
+      }
+    } else {
+      // If not HEIC, proceed with the original image file
+      processImage(photo);
+    }
+  };
+
+
+// REFACTOR THIS IN TO UTILS ONCE iOS issue fixed
+  const processImage = (photo) => {
+
 
     if (photo) {
       setImgUpload(photo);
