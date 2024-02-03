@@ -95,18 +95,17 @@ export default function PhotoUpload({
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Determine the quality based on the file size
-          let quality;
-          if (photo.size < 1024 * 1024) {
-            // Image size < 1MB - 90%
-            quality = 0.9;
-          } else if (photo.size < 5 * 1024 * 1024) {
-            // Image size between 1MB and 5MB - 70%
-            quality = 0.7;
-          } else {
+          // Determine the quality factor based on the original file size
+          let quality = 0.7;
+          if (photo.size > 5000000) {
+            // If the file size is greater than 5MB - 50%
             quality = 0.5;
+          } else if (photo.size > 10000000) {
+            // If the file size is greater than 10MB - 30%
+            quality = 0.3;
           }
 
+          // Convert the canvas to a JPEG format
           const dataURI = canvas.toDataURL("image/jpeg", quality);
           // Remove prefix
           const base64 = dataURI.split(",")[1];
