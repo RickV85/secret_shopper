@@ -12,6 +12,18 @@ export default function DateInput({ visitDate, setVisitDate }) {
 
   const todaysDate = generateTodaysDate();
 
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    if (selectedDate > todaysDate) {
+      alert("Please do not pick a day in the future.");
+      setVisitDate("");
+      window.sessionStorage.setItem("visitDate", "");
+      return;
+    }
+    setVisitDate(e.target.value);
+    window.sessionStorage.setItem("visitDate", e.target.value);
+  };
+
   return (
     <div className={styles.div}>
       <label htmlFor="visitDate">Date of visit</label>
@@ -20,13 +32,10 @@ export default function DateInput({ visitDate, setVisitDate }) {
         name="visitDate"
         type="date"
         max={todaysDate}
-        min={'2020-01-01'}
+        min={"2020-01-01"}
         className={styles.input}
         value={visitDate}
-        onChange={(e) => {
-          setVisitDate(e.target.value);
-          window.sessionStorage.setItem("visitDate", e.target.value);
-        }}
+        onChange={handleDateChange}
       />
     </div>
   );

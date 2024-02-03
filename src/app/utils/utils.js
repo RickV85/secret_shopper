@@ -5,7 +5,6 @@ import TextInput from "../Components/TextInput/TextInput";
 
 export const generateTodaysDate = () => {
   const today = new Date().toISOString().split("T")[0];
-  console.log(today)
   return today;
 };
 
