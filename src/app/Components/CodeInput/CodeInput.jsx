@@ -1,6 +1,6 @@
 "use client";
 import styles from "./CodeInput.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "@/app/utils/apicalls";
 import Link from "next/link";
@@ -9,6 +9,11 @@ export default function CodeInput() {
   const [userCode, setUserCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
+
+  // REMOVE AFTER TESTING
+  useEffect(() => {
+    window.sessionStorage.clear();
+  }, []);
 
   const handleChange = (e) => {
     setUserCode(e.target.value);

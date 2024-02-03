@@ -9,6 +9,7 @@ export default function Welcome() {
       <Header showBackBtn={true} />
       <main className={styles.main}>
         <HeroImage />
+        {/* REMOVE SS CLEARING IN CODE INPUT */}
         <CodeInput />
       </main>
     </>
