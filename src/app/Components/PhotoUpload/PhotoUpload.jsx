@@ -83,7 +83,7 @@ export default function PhotoUpload({
         processImage(convertedBlob);
       } catch (error) {
         console.error("Error converting HEIC to JPEG:", error);
-        setLoadingMsg("HEIC photo conversion failed. PLease try uploading again.")
+        setLoadingMsg("HEIC photo conversion failed. Please try uploading again.")
       }
     } else {
       // If not HEIC, proceed with the original image file
