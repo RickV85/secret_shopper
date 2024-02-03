@@ -10,6 +10,8 @@ export default function DateInput({ visitDate, setVisitDate }) {
     }
   }, []);
 
+  const todaysDate = generateTodaysDate();
+
   return (
     <div className={styles.div}>
       <label htmlFor="visitDate">Date of visit</label>
@@ -17,7 +19,8 @@ export default function DateInput({ visitDate, setVisitDate }) {
         id="visitDate"
         name="visitDate"
         type="date"
-        max={generateTodaysDate()}
+        max={todaysDate}
+        min={'2020-01-01'}
         className={styles.input}
         value={visitDate}
         onChange={(e) => {
