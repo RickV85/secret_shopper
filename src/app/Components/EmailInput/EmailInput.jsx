@@ -10,7 +10,7 @@ export default function EmailInput({ userEmail, setUserEmail }) {
   }, []);
   return (
     <div className={styles.div}>
-      <label>Email address</label>
+      <label htmlFor="emailAddress">Email address</label>
       <input
         id="emailAddress"
         name="emailAddress"

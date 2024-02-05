@@ -48,13 +48,23 @@ export const createSurveyDisplay = (
   return questionDisplay;
 };
 
+export const isHeicImg = (photoName) => {
+  const photoFileNameLength = photoName.length;
+  const fileType = photoName.slice(photoFileNameLength - 4).toLowerCase();
+  if (fileType === "heic" || fileType === "heif") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const scaleAndProcessImage = (photo) => {
   return new Promise((resolve, reject) => {
     if (!photo) {
       reject("No photo to process");
       return;
     }
-    
+
     const reader = new FileReader();
 
     reader.onload = (e) => {

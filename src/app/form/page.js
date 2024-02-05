@@ -9,8 +9,8 @@ import { checkSurveySubmit, createSurveyDisplay } from "@/app/utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
-import Comment from "../Components/Comment/Comment";
 import PhotoUpload from "../Components/PhotoUpload/PhotoUpload";
+import Comment from "../Components/Comment/Comment";
 
 export default function Form() {
   const [visitDate, setVisitDate] = useState("");

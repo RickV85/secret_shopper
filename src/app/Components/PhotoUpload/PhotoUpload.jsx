@@ -1,8 +1,9 @@
+"use client";
 import { useEffect, useState } from "react";
 import styles from "./PhotoUpload.module.css";
 import NextImage from "next/image";
 import { uploadImageImgurPost } from "@/app/utils/apicalls";
-import { scaleAndProcessImage } from "@/app/utils/utils";
+import { scaleAndProcessImage, isHeicImg } from "@/app/utils/utils";
 
 export default function PhotoUpload({
   imgUploadImgurUrl,
@@ -12,6 +13,7 @@ export default function PhotoUpload({
   const [imgUploadName, setImgUploadName] = useState("No file chosen");
   const [imgUploadBase64, setImgUploadBase64] = useState("");
   const [loadingMsg, setLoadingMsg] = useState("");
+  const heic2any = require("heic2any");
 
   useEffect(() => {
     if (imgUpload && imgUploadImgurUrl === "") {
@@ -52,7 +54,7 @@ export default function PhotoUpload({
   useEffect(() => {
     if (imgUploadName && imgUploadName.length > 20) {
       const shortenedName = imgUploadName.slice(0, 20);
-      setImgUploadName(`${shortenedName}...jpg`);
+      setImgUploadName(`${shortenedName}...`);
     }
   }, [imgUploadName]);
 
@@ -75,14 +77,16 @@ export default function PhotoUpload({
     // Create base64 code via converting HEIC then processing and scaling,
     // else process and scale img directly
     let scaledJpgBase64 = "";
-    if (photo.type === "image/heic" || photo.name.endsWith(".HEIC")) {
+    const isHeic = isHeicImg(photo.name);
+    if (photo.type === "image/heic" || isHeic) {
       try {
         const convertedBlob = await heic2any({
           blob: photo,
           toType: "image/jpeg",
           quality: 0.25,
         });
-
+        
+        console.log(convertedBlob)
         scaledJpgBase64 = await scaleAndProcessImage(convertedBlob);
         setImgUploadBase64(scaledJpgBase64);
       } catch (error) {
@@ -99,10 +103,10 @@ export default function PhotoUpload({
 
   return (
     <section id="photoInputDiv" className={styles["photo-upload"]}>
-      <label htmlFor="photoInputDiv">
+      <p htmlFor="photoInputDiv" role="label">
         Optional - Upload a photo from your visit
-      </label>
-      <div className={styles["photo-upload-div"]}>
+      </p>
+      <div id="photoInputDiv" className={styles["photo-upload-div"]}>
         <label htmlFor="photoInput" className={styles["photo-upload-input"]}>
           UPLOAD PHOTO
         </label>
@@ -111,7 +115,7 @@ export default function PhotoUpload({
           name="photoUpload"
           type="file"
           onChange={(event) => handleImageUpload(event)}
-          accept="image/jpeg"
+          accept="image/jpeg, image/heic"
           style={{ display: "none" }}
         />
         <div className={styles["photo-name-div"]}>
