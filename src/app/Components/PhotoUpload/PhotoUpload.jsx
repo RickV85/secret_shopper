@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./PhotoUpload.module.css";
 import NextImage from "next/image";
 import { uploadImageImgurPost } from "@/app/utils/apicalls";
+import { scaleAndProcessImage } from "@/app/utils/utils";
 
 export default function PhotoUpload({
   imgUploadImgurUrl,
@@ -51,11 +52,10 @@ export default function PhotoUpload({
   useEffect(() => {
     if (imgUploadName && imgUploadName.length > 20) {
       const shortenedName = imgUploadName.slice(0, 20);
-      setImgUploadName(`${shortenedName}...jpeg`);
+      setImgUploadName(`${shortenedName}...jpg`);
     }
   }, [imgUploadName]);
 
-  // REFACTOR THIS ONCE iOS issue fixed
   const handleImageUpload = async (event) => {
     const photo = event.target.files[0];
 
@@ -67,82 +67,36 @@ export default function PhotoUpload({
       setImgUploadBase64("");
       setImgUploadImgurUrl("");
     }
-  
+
     if (!photo) return;
-  
-    if (photo.type === "image/heic" || photo.name.endsWith('.HEIC')) {
+    setImgUpload(photo);
+    setImgUploadName(photo.name);
+
+    // Create base64 code via converting HEIC then processing and scaling,
+    // else process and scale img directly
+    let scaledJpgBase64 = "";
+    if (photo.type === "image/heic" || photo.name.endsWith(".HEIC")) {
       try {
         const convertedBlob = await heic2any({
           blob: photo,
           toType: "image/jpeg",
-          quality: 0.25
+          quality: 0.25,
         });
-  
-        processImage(convertedBlob);
+
+        scaledJpgBase64 = await scaleAndProcessImage(convertedBlob);
+        setImgUploadBase64(scaledJpgBase64);
       } catch (error) {
         console.error("Error converting HEIC to JPEG:", error);
-        setLoadingMsg("HEIC photo conversion failed. Please try uploading again.")
+        setLoadingMsg(
+          "HEIC photo conversion failed. Please try uploading again."
+        );
       }
     } else {
-      processImage(photo);
+      scaledJpgBase64 = await scaleAndProcessImage(photo);
+      setImgUploadBase64(scaledJpgBase64);
     }
   };
 
-
-// REFACTOR THIS IN TO UTILS ONCE iOS issue fixed
-  const processImage = (photo) => {
-    if (photo) {
-      setImgUpload(photo);
-      setImgUploadName(photo.name);
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        const img = new Image();
-
-        img.onload = () => {
-          const maxHeight = 600;
-          let width = img.width;
-          let height = img.height;
-          const scaleRatio = maxHeight / height;
-
-          // Scale if the height exceeds maxHeight
-          if (scaleRatio < 1) {
-            width = width * scaleRatio;
-            height = maxHeight;
-          }
-
-          // Resize the canvas to the new dimensions
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-          canvas.width = width;
-          canvas.height = height;
-
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Determine the quality factor based on the original file size
-          let quality = 0.6;
-          if (photo.size > 5000000) {
-            // If the file size is greater than 5MB - 40%
-            quality = 0.4;
-          } else if (photo.size > 10000000) {
-            // If the file size is greater than 10MB - 20%
-            quality = 0.2;
-          }
-
-          // Convert the canvas to a JPEG format
-          const dataURI = canvas.toDataURL("image/jpeg", quality);
-          // Remove prefix
-          const base64 = dataURI.split(",")[1];
-
-          setImgUploadBase64(base64);
-        };
-
-        img.src = e.target.result;
-      };
-
-      reader.readAsDataURL(photo);
-    }
-  };
   return (
     <section id="photoInputDiv" className={styles["photo-upload"]}>
       <label htmlFor="photoInputDiv">
