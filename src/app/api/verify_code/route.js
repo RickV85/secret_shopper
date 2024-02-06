@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const userCode = await req.json();
-    const secretCode = process.env.SECRET_CODE;
+    const secretCodes = JSON.parse(process.env.SECRET_CODES);
 
-    if (userCode.toLowerCase() === secretCode) {
+    if (secretCodes.includes(userCode.toLowerCase())) {
       return NextResponse.json({ data: { verified: true } });
     } else {
       return NextResponse.json({ data: { verified: false } });
