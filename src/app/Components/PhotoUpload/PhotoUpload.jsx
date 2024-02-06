@@ -16,13 +16,16 @@ export default function PhotoUpload({
   const heic2any = require("heic2any");
 
   useEffect(() => {
+    // If there is an image file and no Imgur URL, upload
     if (imgUpload && imgUploadImgurUrl === "") {
       setLoadingMsg("Uploading photo, please wait...");
+      // Undefined return from Imgur is an error, likely over 10MB file
     } else if (imgUploadImgurUrl === undefined) {
       setLoadingMsg(
         "Error uploading your photo. Please try again. If the issues persists, please try a smaller or different file."
       );
     } else {
+      // Clear loading message if there is a image file AND Imgur URL
       setLoadingMsg("");
     }
   }, [imgUploadImgurUrl, imgUpload]);
