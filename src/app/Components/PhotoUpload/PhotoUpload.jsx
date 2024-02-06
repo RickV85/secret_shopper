@@ -77,18 +77,15 @@ export default function PhotoUpload({
     // Create base64 code via converting HEIC then processing and scaling,
     // else process and scale img directly
     let scaledJpgBase64 = "";
-    const isHeic = isHeicImg(photo.name);
-    if (photo.type === "image/heic" || isHeic) {
+    if (photo.type === "image/heic" || isHeicImg(photo.name)) {
       try {
         const convertedBlob = await heic2any({
           blob: photo,
           toType: "image/jpeg",
           quality: 0.25,
         });
-        
-        console.log(convertedBlob)
+
         scaledJpgBase64 = await scaleAndProcessImage(convertedBlob);
-        setImgUploadBase64(scaledJpgBase64);
       } catch (error) {
         console.error("Error converting HEIC to JPEG:", error);
         setLoadingMsg(
@@ -97,7 +94,12 @@ export default function PhotoUpload({
       }
     } else {
       scaledJpgBase64 = await scaleAndProcessImage(photo);
+    }
+
+    if (scaledJpgBase64) {
       setImgUploadBase64(scaledJpgBase64);
+    } else {
+      setLoadingMsg("Error processing image. Please try uploading again.")
     }
   };
 
