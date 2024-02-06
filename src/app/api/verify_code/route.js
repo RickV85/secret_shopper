@@ -13,7 +13,7 @@ export async function POST(req) {
   } catch (error) {
     return NextResponse.json(
       { error: { message: error.message, code: "SERVER_ERROR" }, data: null },
-      500
+      { status: 500 }
     );
   }
 }

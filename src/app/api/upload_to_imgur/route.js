@@ -24,6 +24,12 @@ export async function POST(req) {
 
     return NextResponse.json({ data: imgurResParsed.data });
   } catch (error) {
-    return NextResponse.json({ error: { message: error.message, code: "IMGUR_UPLOAD_FAILED" }, data: null }, 502);
+    return NextResponse.json(
+      {
+        error: { message: error.message, code: "IMGUR_UPLOAD_FAILED" },
+        data: null,
+      },
+      { status: 502 }
+    );
   }
 }
