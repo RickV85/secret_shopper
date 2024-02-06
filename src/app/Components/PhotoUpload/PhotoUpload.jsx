@@ -52,6 +52,7 @@ export default function PhotoUpload({
   }, [imgUploadBase64, imgUploadImgurUrl]);
 
   useEffect(() => {
+    // Limit name to 20 characters to prevent layout issues
     if (imgUploadName && imgUploadName.length > 20) {
       const shortenedName = imgUploadName.slice(0, 20);
       setImgUploadName(`${shortenedName}...`);
@@ -61,15 +62,14 @@ export default function PhotoUpload({
   const handleImageUpload = async (event) => {
     const photo = event.target.files[0];
 
-    // If an image has been uploaded, reset all state
-    // triggers re-upload to allow for user to change
-    // image if already uploaded
+    // If an image has been uploaded, reset all state.
     if (imgUpload && photo) {
       setImgUpload(undefined);
       setImgUploadBase64("");
       setImgUploadImgurUrl("");
     }
 
+    // If user cancels file upload, stop
     if (!photo) return;
     setImgUpload(photo);
     setImgUploadName(photo.name);
@@ -99,7 +99,7 @@ export default function PhotoUpload({
     if (scaledJpgBase64) {
       setImgUploadBase64(scaledJpgBase64);
     } else {
-      setLoadingMsg("Error processing image. Please try uploading again.")
+      setLoadingMsg("Error processing image. Please try uploading again.");
     }
   };
 
