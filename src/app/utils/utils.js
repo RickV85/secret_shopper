@@ -131,7 +131,6 @@ export const checkSurveySubmit = (date, email, responses) => {
   for (const res in responses) {
     const questionIndex = +res.split("q")[1] - 1;
     const isRequired = surveyQuestions[questionIndex][1];
-    console.log(questionIndex, isRequired)
     if (!responses[res] && isRequired) {
       alert(
         `Please enter a response for question - "${surveyQuestions[questionIndex][2]}"`
