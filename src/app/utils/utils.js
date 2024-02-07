@@ -150,7 +150,7 @@ export const createEmailResponseDisplay = (responses) => {
     if (userResponse) {
       element = `
         <div>
-          <h4>${q[1]}</h4>
+          <h4>${q[2]}</h4>
           <p>${userResponse}</p>
         </div>
       `;
