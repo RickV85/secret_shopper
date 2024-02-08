@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Buttermilk Kitchen Secret Shopper App
 
-## Getting Started
+## Introduction
 
-First, run the development server:
+This is a freelance project for a restaurant, Buttermilk Kitchen in Atlanta, GA. This application was created to help initialize a "Secret Shopper" program to help the restaurant improve their customer experience based on their feedback.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Designed mobile-first since most users will be in the restaurant during use and incorporating Buttermilk Kitchen's branding to provide a cohesive experience for the user reaching this form via their marketing site. This application was built using Next.js 14, utilizing it's server-side rendering and API routes, to create a password protected survey form that sends collected survey data, including an optional photo, on completion to the store manager and the respondent. After that, the store manager coordinates with the respondent to reward them with a gift card to the restaurant.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Automated batch email service - Creates separate emails with content tailored to both the respondent and store manager. After the form is validated, the emails are sent via a Node.js API route to Resend, an automated email service.
+- Photo upload - A user is given the option to upload a picture from their visit, which can be taken directly from a mobile device's camera or uploaded from any device, and send it along with the rest of the survey data via email. The images are scaled down to a maximum height of 800px and quality is determined based on file size, converted from HEIC or any other format, and then sent in jpg format.
+- Dynamic question generation - Created with best practices and scalability in mind, survey questions are created by processing an array of question content, allowing for easy updating and addition of questions in the future. The content is formed in to Question class instances, then based on their types the questions are formed into components that represent the question response types (multiple choice and text).
+- Form validation - Questions in this form can either be optional or required and on submission the form is checked over to make sure responses have been made for required fields, alerting the user to questions they did not respond to.
+ 
+## Screenshots
 
-## Learn More
+Since this is a private, password-protected app, here are some screen shots of the app. If you would like a live demo of this app, please let me know!
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
