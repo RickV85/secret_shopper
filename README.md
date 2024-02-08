@@ -1,8 +1,10 @@
+<img src="https://github.com/RickV85/secret_shopper/blob/main/public/BK_Logo_400.jpg" alt="Buttermilk Kitchen logo" />
+
 # Buttermilk Kitchen Secret Shopper App
 
 ## Introduction
 
-This is a freelance project for a restaurant, Buttermilk Kitchen in Atlanta, GA. This application was created to help initialize a "Secret Shopper" program to help the restaurant improve their customer experience based on their feedback.
+This is a freelance project for a restaurant, Buttermilk Kitchen in Atlanta, GA. This application was created to assist management with creating a "Secret Shopper" program to help the staff improve their customer experience based on the Secret Shopper feedback.
 
 ## Overview
 
@@ -19,3 +21,14 @@ Designed mobile-first since most users will be in the restaurant during use and 
 
 Since this is a private, password-protected app, here are some screen shots of the app. If you would like a live demo of this app, please let me know!
 
+### Welcome page
+
+![Welcome page](https://github.com/RickV85/secret_shopper/assets/113707169/6c6b611c-f58a-4efd-91df-c4747b0b5108)
+
+### Secret Shopper form
+
+![Secret Shopper form](https://github.com/RickV85/secret_shopper/assets/113707169/f89340d2-a58d-43d3-b295-140632576e8d)
+
+### Complete / Thank you page
+
+![Survey complete page](https://github.com/RickV85/secret_shopper/assets/113707169/c7a7cfee-e94c-4181-8487-a5dd6d72f13c)
