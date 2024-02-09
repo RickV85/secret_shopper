@@ -122,7 +122,7 @@ export default function Form() {
         {responseStateInitialized ? (
           <form
             className={`${styles.form} ${
-              imgUploadImgurUrl ? styles.withPhoto : ""
+              imgUploadImgurUrl ? styles.withPhoto : null
             }`}
             onSubmit={(e) => handleSubmit(e)}
           >
