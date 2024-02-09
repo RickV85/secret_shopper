@@ -20,11 +20,11 @@ export const verifyCode = async (userCode) => {
   return verifyRes.data.verified;
 };
 
-export const uploadImageImgurPost = async (imgFormData) => {
+export const uploadImageImgurPost = async (imgUploadBase64) => {
   const options = {
     method: "POST",
-    headers: { "Content-Type": "multipart/form-data" },
-    body: imgFormData,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(imgUploadBase64),
   };
   const imgurRes = await makeFetchRequest("/api/upload_to_imgur", options);
   return imgurRes.data;

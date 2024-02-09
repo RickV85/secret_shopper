@@ -5,7 +5,7 @@ export async function POST(req) {
     const userCode = await req.json();
     const secretCodes = JSON.parse(process.env.SECRET_CODES);
 
-    if (secretCodes.includes(userCode.toLowerCase())) {
+    if (secretCodes.includes(userCode.toLowerCase().trim())) {
       return NextResponse.json({ data: { verified: true } });
     } else {
       return NextResponse.json({ data: { verified: false } });
