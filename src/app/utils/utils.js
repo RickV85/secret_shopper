@@ -97,7 +97,7 @@ export const scaleAndProcessImage = (photo) => {
           quality = 0.4;
         } else if (photo.size > 5000000) {
           // If larger than 5mb throw an error
-          throw new Error ("Please upload an image smaller than 5MB.")
+          reject("Please upload an image smaller than 5MB.");
         }
 
         // Convert the canvas to a JPEG format
@@ -108,7 +108,7 @@ export const scaleAndProcessImage = (photo) => {
         // setImgUploadBase64(base64);
         resolve(base64);
       };
-      
+
       img.onerror = () => {
         reject("Failed to load image");
       };

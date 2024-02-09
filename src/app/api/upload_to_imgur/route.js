@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const imgFormData = await req.formData();
-    console.log("imgFormData", imgFormData)
     const imgurApiKey = process.env.IMGUR_CLIENT_ID;
 
     const myHeaders = new Headers();
@@ -22,7 +21,6 @@ export async function POST(req) {
     );
 
     const imgurResParsed = await imgurRes.json();
-    console.log("imgurResponse", imgurResParsed)
 
     return NextResponse.json({ data: imgurResParsed.data });
   } catch (error) {

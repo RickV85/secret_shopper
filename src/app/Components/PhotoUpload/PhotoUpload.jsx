@@ -100,7 +100,6 @@ export default function PhotoUpload({
     }
 
     if (scaledJpgBase64) {
-      console.log("imgBase64", scaledJpgBase64);
       setImgUploadBase64(scaledJpgBase64);
     } else {
       setLoadingMsg("Error processing image. Please try uploading again.");
@@ -121,7 +120,7 @@ export default function PhotoUpload({
           name="photoUpload"
           type="file"
           onChange={(event) => handleImageUpload(event)}
-          accept="image/jpeg, image/heic"
+          accept="image/*"
           style={{ display: "none" }}
         />
         <div className={styles["photo-name-div"]}>
