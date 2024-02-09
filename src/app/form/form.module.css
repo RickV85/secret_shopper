@@ -17,7 +17,7 @@
   questions (currently 19) or elements added to form.
   This addresses issue with too much white space at
   bottom of form on mobile browsers */
-  height: 280rem;
+  height: 281rem;
   position: relative;
   max-width: 45rem;
   display: flex;
@@ -28,7 +28,7 @@
 
 .withPhoto {
   /* + 25rem for photo  */
-  height: 305rem;
+  height: 306rem;
 }
 
 .input-div {
@@ -70,11 +70,11 @@
 
 @media screen and (min-width: 769px) {
   .form {
-    height: 267rem;
+    height: 270rem;
   }
 
   .withPhoto {
     /* + 30rem for photo  */
-    height: 297rem;
+    height: 300rem;
   }
 }
