@@ -92,17 +92,22 @@ export default function PhotoUpload({
       } catch (error) {
         console.error("Error converting HEIC to JPEG:", error);
         setLoadingMsg(
-          "HEIC photo conversion failed. Please try uploading again."
+          `HEIC photo conversion failed. Please try uploading again. ${error}`
         );
       }
     } else {
-      scaledJpgBase64 = await scaleAndProcessImage(photo);
+      try {
+        scaledJpgBase64 = await scaleAndProcessImage(photo);
+      } catch (error) {
+        console.error("Error processing/scaling image:", error);
+        setLoadingMsg(
+          `Image processing failed. Please try uploading again. ${error}`
+        );
+      }
     }
 
     if (scaledJpgBase64) {
       setImgUploadBase64(scaledJpgBase64);
-    } else {
-      setLoadingMsg("Error processing image. Please try uploading again.");
     }
   };
 

@@ -71,7 +71,7 @@ export const scaleAndProcessImage = (photo) => {
       const img = new Image();
 
       img.onload = () => {
-        const maxHeight = 650;
+        const maxHeight = 800;
         let width = img.width;
         let height = img.height;
         const scaleRatio = maxHeight / height;
@@ -91,13 +91,14 @@ export const scaleAndProcessImage = (photo) => {
         ctx.drawImage(img, 0, 0, width, height);
 
         // Determine the quality factor based on the original file size
-        let quality = 0.5;
-        if (photo.size > 3000000) {
-          // If the file size is greater than 3MB - 30%
-          quality = 0.3;
-        } else if (photo.size > 5000000) {
-          // If larger than 5mb throw an error
-          reject("Please upload an image smaller than 5MB.");
+        let quality = 0.8;
+        console.log(photo.size)
+        if (photo.size >= 3000000 && photo.size < 5000000) {
+          // If the file size is greater than 3MB, less than 5MB - 30%
+          quality = 0.6;
+        } else if (photo.size >= 5000000) {
+          // If larger than 5MB reject
+          reject("Please upload a smaller image.");
         }
 
         // Convert the canvas to a JPEG format
