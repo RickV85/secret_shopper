@@ -1,5 +1,5 @@
 "use client";
-import styles from "./page.module.css";
+import styles from "./form.module.css";
 import { useEffect, useState } from "react";
 import { sendEmailPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export default function Form() {
 
   useEffect(() => {
     // Verifies that a user has the code, prevents direct nav
-    const verifyUserCode = async () => {
+    const verifyUserCodeGetSesStorage = async () => {
       try {
         const userCode = await window.sessionStorage.getItem("code");
         const isAuthorized = await verifyCode(userCode);
@@ -58,7 +58,7 @@ export default function Form() {
         router.push("/");
       }
     };
-    verifyUserCode();
+    verifyUserCodeGetSesStorage();
   }, []);
 
   useEffect(() => {
@@ -120,7 +120,12 @@ export default function Form() {
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         {responseStateInitialized ? (
-          <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+          <form
+            className={`${styles.form} ${
+              imgUploadImgurUrl ? styles.withPhoto : ""
+            }`}
+            onSubmit={(e) => handleSubmit(e)}
+          >
             {/* REQUIRED - Date, email and all surveyQuestions */}
             <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
             <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />

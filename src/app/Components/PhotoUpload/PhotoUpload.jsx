@@ -137,7 +137,7 @@ export default function PhotoUpload({
             priority
             fill
             style={{ objectFit: "contain" }}
-            sizes="50vw"
+            sizes="100vw"
             alt="Your uploaded photo"
           />
         </div>
