@@ -21,7 +21,11 @@ export const verifyCode = async (userCode) => {
 };
 
 export const uploadImageImgurPost = async (imgFormData) => {
-  const options = { method: "POST", body: imgFormData };
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "multipart/form-data" },
+    body: imgFormData,
+  };
   const imgurRes = await makeFetchRequest("/api/upload_to_imgur", options);
   return imgurRes.data;
 };

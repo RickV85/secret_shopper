@@ -7,6 +7,7 @@ export async function POST(req) {
 
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Client-ID ${imgurApiKey}`);
+    myHeaders.append("Content-Type", "multipart/form-data");
 
     const requestOptions = {
       method: "POST",
