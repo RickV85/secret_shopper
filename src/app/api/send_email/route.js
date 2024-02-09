@@ -61,7 +61,6 @@ export async function POST(req) {
     ]);
 
     if (sendResult.error) {
-      console.log(sendResult.error);
       throw new Error("Failure - Resend failed");
     }
 

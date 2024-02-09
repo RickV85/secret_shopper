@@ -39,14 +39,12 @@ export default function PhotoUpload({
           const imgFormData = new FormData();
           imgFormData.append("image", imgUploadBase64);
           imgFormData.append("type", "base64");
-          console.log("formData in PhotoUpload", imgFormData.get("image"))
 
           const imgurRes = await uploadImageImgurPost(imgFormData);
           if (imgurRes) {
             setImgUploadImgurUrl(imgurRes.link);
           }
         } catch (error) {
-          console.log(error);
           setLoadingMsg("Error uploading image, please try again.");
         }
       };

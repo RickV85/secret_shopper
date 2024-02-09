@@ -91,10 +91,10 @@ export const scaleAndProcessImage = (photo) => {
         ctx.drawImage(img, 0, 0, width, height);
 
         // Determine the quality factor based on the original file size
-        let quality = 0.6;
+        let quality = 0.5;
         if (photo.size > 3000000) {
-          // If the file size is greater than 3MB - 40%
-          quality = 0.4;
+          // If the file size is greater than 3MB - 30%
+          quality = 0.3;
         } else if (photo.size > 5000000) {
           // If larger than 5mb throw an error
           reject("Please upload an image smaller than 5MB.");

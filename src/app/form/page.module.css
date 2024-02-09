@@ -37,10 +37,9 @@
 .submit-form-btn {
   width: 11.5rem;
   height: 3rem;
-  margin: auto;
 }
 
-.submit-msg-div {
+.submit-div {
   width: 100%;
   height: 3rem;
   display: flex;

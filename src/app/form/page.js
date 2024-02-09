@@ -100,7 +100,7 @@ export default function Form() {
         photoUrl: imgUploadImgurUrl,
         comment: comment,
       });
-      console.log(sendRes);
+
       if (sendRes.startsWith("Success")) {
         window.sessionStorage.clear();
         router.push("/complete");
@@ -131,15 +131,15 @@ export default function Form() {
               setImgUploadImgurUrl={setImgUploadImgurUrl}
             />
             <Comment comment={comment} setComment={setComment} />
-            {submitMsg ? (
-              <div className={styles["submit-msg-div"]}>
+            <div className={styles["submit-div"]}>
+              {submitMsg ? (
                 <p>{submitMsg}</p>
-              </div>
-            ) : (
-              <button role="submit" className={styles["submit-form-btn"]}>
-                SUBMIT
-              </button>
-            )}
+              ) : (
+                <button role="submit" className={styles["submit-form-btn"]}>
+                  SUBMIT
+                </button>
+              )}
+            </div>
           </form>
         ) : (
           <h2 className={styles["initial-load-msg"]}>Loading...please wait</h2>
