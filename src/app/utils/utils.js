@@ -129,12 +129,17 @@ export const checkSurveySubmit = (date, email, responses) => {
   }
   for (const res in responses) {
     const questionIndex = +res.split("q")[1] - 1;
-    const isRequired = surveyQuestions[questionIndex][1];
-    if (!responses[res] && isRequired) {
-      alert(
-        `Please enter a response for question - "${surveyQuestions[questionIndex][2]}"`
-      );
-      return true;
+    // If question is not an "otherRes" on a "Other" or "No"
+    // MultiChoice question response. These do not have question
+    // data associated and are not required.
+    if (!res.endsWith("otherRes")) {
+      const isRequired = surveyQuestions[questionIndex][1];
+      if (!responses[res] && isRequired) {
+        alert(
+          `Please enter a response for question - "${surveyQuestions[questionIndex][2]}"`
+        );
+        return true;
+      }
     }
   }
   return false;
@@ -146,7 +151,16 @@ export const createEmailResponseDisplay = (responses) => {
     let element;
     const qKey = `q${i + 1}`;
     const userResponse = responses[qKey];
-    if (userResponse) {
+    const otherRes = responses[`${qKey}-otherRes`];
+    if (userResponse && otherRes) {
+      element = `
+        <div>
+          <h4>${q[2]}</h4>
+          <p>${userResponse} - ${otherRes}</p>
+        </div>
+      `;
+      responseDisplay += element;
+    } else if (userResponse) {
       element = `
         <div>
           <h4>${q[2]}</h4>

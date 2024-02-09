@@ -44,8 +44,18 @@ export default function Form() {
           setResponses(JSON.parse(savedResponses));
         } else {
           const initialResponsesState = {};
-          for (let i = 1; i <= surveyQuestions.length; i++) {
+          for (let i = 1; i < surveyQuestions.length; i++) {
+            // Set initial response state qX: ""
             initialResponsesState[`q${i}`] = "";
+            // If a MultiChoice question
+            if (surveyQuestions[i][0] === "multi") {
+              const qResOptions = surveyQuestions[i][3];
+              // If response options include Other or No,
+              // initialize state for the otherRes text
+              if (qResOptions.includes("Other") || qResOptions.includes("No")) {
+                initialResponsesState[`q${i}-otherRes`] = "";
+              }
+            }
           }
           setResponses(initialResponsesState);
         }
