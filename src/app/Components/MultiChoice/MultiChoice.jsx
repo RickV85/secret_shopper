@@ -33,8 +33,8 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
           </div>
         );
       })}
-      {/* Conditionally render text input for "Other" response*/}
-      {responseState[data.name] === "Other" ? (
+      {/* Conditionally render text input for "Other" and "No" response*/}
+      {responseState[data.name] === "Other" || responseState[data.name] === "No" ? (
         <div className={styles["other-input-div"]}>
           <label htmlFor={`${data.name}-otherText`}>
             Please explain below:

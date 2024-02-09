@@ -120,12 +120,7 @@ export default function Form() {
       <main className={styles.main}>
         <h1 className={styles["form-headline"]}>SECRET SHOPPER SURVEY</h1>
         {responseStateInitialized ? (
-          <form
-            className={`${styles.form} ${
-              imgUploadImgurUrl ? styles.withPhoto : null
-            }`}
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
             {/* REQUIRED - Date, email and all surveyQuestions */}
             <DateInput visitDate={visitDate} setVisitDate={setVisitDate} />
             <EmailInput userEmail={userEmail} setUserEmail={setUserEmail} />
