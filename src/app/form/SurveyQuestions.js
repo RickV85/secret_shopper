@@ -1,7 +1,4 @@
 export const surveyQuestions = [
-  // *******
-  // Add height to .form if adding more questions
-  // *******
   // q1
   [
     "multi",
