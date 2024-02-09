@@ -39,6 +39,7 @@ export default function PhotoUpload({
           const imgFormData = new FormData();
           imgFormData.append("image", imgUploadBase64);
           imgFormData.append("type", "base64");
+          console.log("formData in PhotoUpload", imgFormData.get("image"))
 
           const imgurRes = await uploadImageImgurPost(imgFormData);
           if (imgurRes) {
@@ -120,7 +121,7 @@ export default function PhotoUpload({
           name="photoUpload"
           type="file"
           onChange={(event) => handleImageUpload(event)}
-          accept="image/*"
+          accept="image/jpeg, image/heic"
           style={{ display: "none" }}
         />
         <div className={styles["photo-name-div"]}>

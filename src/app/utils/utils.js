@@ -105,7 +105,6 @@ export const scaleAndProcessImage = (photo) => {
         // Remove prefix, start at "/"
         const base64 = dataURI.split(",")[1];
 
-        // setImgUploadBase64(base64);
         resolve(base64);
       };
 
