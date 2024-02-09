@@ -12,10 +12,13 @@
 }
 
 .form {
+  /* Need to add height here and in media query if more
+  questions (currently 19) or elements added to form.
+  This addresses issue with too much white space at
+  bottom of form on mobile browsers */
+  height: 280rem;
   position: relative;
-  box-sizing: border-box;
   max-width: 45rem;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -56,4 +59,10 @@
   margin-top: 2rem;
   font-size: 1.5rem;
   font-weight: 400;
+}
+
+@media screen and (min-width: 769px) {
+  .form {
+    height: 265rem;
+  }
 }
