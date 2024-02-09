@@ -29,11 +29,12 @@ export default function CodeInput() {
 
   const handleSubmit = async () => {
     try {
-      const isAuthorized = await verifyCode(userCode);
+      const formattedUserCode = userCode.toLowerCase().trim();
+      const isAuthorized = await verifyCode(formattedUserCode);
 
       if (isAuthorized) {
         router.push("/form");
-        window.sessionStorage.setItem("code", userCode);
+        window.sessionStorage.setItem("code", formattedUserCode);
       } else {
         failedAuth();
       }

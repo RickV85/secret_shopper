@@ -92,7 +92,6 @@ export const scaleAndProcessImage = (photo) => {
 
         // Determine the quality factor based on the original file size
         let quality = 0.8;
-        console.log(photo.size)
         if (photo.size >= 3000000 && photo.size < 5000000) {
           // If the file size is greater than 3MB, less than 5MB - 30%
           quality = 0.6;

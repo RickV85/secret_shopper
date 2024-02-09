@@ -36,11 +36,6 @@ export default function PhotoUpload({
     if (imgUploadBase64 && !imgUploadImgurUrl) {
       const uploadImageToImgur = async () => {
         try {
-          // Change to JSON and create formData on BE
-          // const imgFormData = new FormData();
-          // imgFormData.append("image", imgUploadBase64);
-          // imgFormData.append("type", "base64");
-
           const imgurRes = await uploadImageImgurPost(imgUploadBase64);
           if (imgurRes && imgurRes?.link) {
             setImgUploadImgurUrl(imgurRes.link);
