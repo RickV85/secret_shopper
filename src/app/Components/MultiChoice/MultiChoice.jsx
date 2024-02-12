@@ -21,12 +21,13 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
           <div className={styles["input-div"]} key={optionId}>
             <input
               id={optionId}
+              className={styles["hidden-radio"]}
               name={data.name}
               value={option}
               type="radio"
               checked={responseState[data.name] === option}
               onChange={onChangeHandler}
-              className={styles["hidden-radio"]}
+              required={data.required}
             />
             <label htmlFor={optionId} className={styles["custom-radio"]}></label>
             <label htmlFor={optionId} onClick={onChangeHandler}>{option}</label>
@@ -44,6 +45,7 @@ export default function MultiChoice({ data, responseState, onChangeHandler }) {
             id={`${data.name}-explainInput`}
             name={`${data.name}-explainRes`}
             onChange={onChangeHandler}
+            required
           />
         </div>
       ) : null}

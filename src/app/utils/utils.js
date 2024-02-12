@@ -119,7 +119,11 @@ export const scaleAndProcessImage = (photo) => {
   });
 };
 
+// Using native HTML5 required, but keeping this active as a fallback
+// Maybe implement more detailed form checking like num of chars,
+// data types, etc. here?
 export const checkSurveySubmit = (date, email, responses) => {
+  console.log("submit run")
   if (!date) {
     alert("Please enter a date for your visit.");
     return true;

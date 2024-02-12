@@ -13,14 +13,15 @@ export default function EmailInput({ userEmail, setUserEmail }) {
       <label htmlFor="emailAddress">Email address</label>
       <input
         id="emailAddress"
+        className={styles.input}
         name="emailAddress"
         type="email"
-        className={styles.input}
         value={userEmail}
         onChange={(e) => {
           setUserEmail(e.target.value);
           window.sessionStorage.setItem("userEmail", e.target.value);
         }}
+        required
       />
     </div>
   );

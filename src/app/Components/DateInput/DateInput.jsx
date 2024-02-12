@@ -27,13 +27,14 @@ export default function DateInput({ visitDate, setVisitDate }) {
       <label htmlFor="visitDate">Date of visit</label>
       <input
         id="visitDate"
+        className={styles.input}
         name="visitDate"
         type="date"
         max={todaysDate}
         min={"2020-01-01"}
-        className={styles.input}
         value={visitDate}
         onChange={handleDateChange}
+        required
       />
     </div>
   );
