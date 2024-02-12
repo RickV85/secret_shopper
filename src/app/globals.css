@@ -22,6 +22,7 @@ html {
 body {
   color: #7d7f82;
   background: #fffefa;
+  font-family: var(--font-montserrat);
 }
 
 a {
@@ -33,7 +34,7 @@ button {
   background: #fffefa;
   border: 2px solid #92bde3;
   border-radius: 3px;
-  font-family: var(--montserrat);
+  font-family: var(--font-montserrat);
   font-style: normal;
   font-weight: 500;
   font-size: 1rem;
@@ -45,7 +46,7 @@ button {
 
 input,
 textarea {
-  font-family: var(--montserrat);
+  font-family: var(--font-montserrat);
   font-size: 1rem;
   padding-left: 0.5rem;
 }

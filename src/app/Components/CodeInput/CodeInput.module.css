@@ -23,7 +23,7 @@
 
 .error {
   font-weight: 700;
-  color: orangered;
+  color: #f05d5e;
 }
 
 .code-input {
@@ -36,7 +36,6 @@
   font-size: 1.5rem;
   color: #3054a1;
   font-weight: 600;
-  font-family: var(--montserrat);
 }
 
 .submit-btn {

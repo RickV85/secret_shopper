@@ -51,9 +51,9 @@ export default function Form() {
             if (surveyQuestions[i][0] === "multi") {
               const qResOptions = surveyQuestions[i][3];
               // If response options include Other or No,
-              // initialize state for the otherRes text
+              // initialize state for the explainRes text
               if (qResOptions.includes("Other") || qResOptions.includes("No")) {
-                initialResponsesState[`q${i}-otherRes`] = "";
+                initialResponsesState[`q${i}-explainRes`] = "";
               }
             }
           }

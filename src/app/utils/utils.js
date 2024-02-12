@@ -129,10 +129,10 @@ export const checkSurveySubmit = (date, email, responses) => {
   }
   for (const res in responses) {
     const questionIndex = +res.split("q")[1] - 1;
-    // If question is not an "otherRes" on a "Other" or "No"
+    // If question is not an "explainRes" on a "Other" or "No"
     // MultiChoice question response. These do not have question
     // data associated and are not required.
-    if (!res.endsWith("otherRes")) {
+    if (!res.endsWith("explainRes")) {
       const isRequired = surveyQuestions[questionIndex][1];
       if (!responses[res] && isRequired) {
         alert(
@@ -151,12 +151,12 @@ export const createEmailResponseDisplay = (responses) => {
     let element;
     const qKey = `q${i + 1}`;
     const userResponse = responses[qKey];
-    const otherRes = responses[`${qKey}-otherRes`];
-    if (userResponse && otherRes) {
+    const explainRes = responses[`${qKey}-explainRes`];
+    if (userResponse && explainRes) {
       element = `
         <div>
           <h4>${q[2]}</h4>
-          <p>${userResponse} - ${otherRes}</p>
+          <p>${userResponse} - ${explainRes}</p>
         </div>
       `;
       responseDisplay += element;
