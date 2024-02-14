@@ -5,7 +5,7 @@ import { sendEmailPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { checkSurveySubmit, createSurveyDisplay } from "@/app/utils/utils";
+import { checkSurveySubmit, createSurveyDisplay, needsExplanation } from "@/app/utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";
@@ -47,14 +47,9 @@ export default function Form() {
           for (let i = 1; i < surveyQuestions.length; i++) {
             // Set initial response state qX: ""
             initialResponsesState[`q${i}`] = "";
-            // If a MultiChoice question
-            if (surveyQuestions[i][0] === "multi") {
-              const qResOptions = surveyQuestions[i][3];
-              // If response options include Other or No,
-              // initialize state for the explainRes text
-              if (qResOptions.includes("Other") || qResOptions.includes("No")) {
+            // If a MultiChoice question initialize an otherRes
+            if (surveyQuestions[i].type === "multi") {
                 initialResponsesState[`q${i}-explainRes`] = "";
-              }
             }
           }
           setResponses(initialResponsesState);

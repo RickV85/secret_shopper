@@ -54,6 +54,7 @@ export default function MultiChoice({ qData, responseState, onChangeHandler }) {
             type="text"
             id={`${qData.name}-explainInput`}
             name={`${qData.name}-explainRes`}
+            value={responseState[`${qData.name}-explainRes`]}
             onChange={onChangeHandler}
             required={qData.explain.resRequired}
           />
