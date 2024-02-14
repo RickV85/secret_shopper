@@ -138,10 +138,10 @@ export const checkSurveySubmit = (date, email, responses) => {
     // MultiChoice question response. These do not have question
     // data associated and are not required.
     if (!res.endsWith("explainRes")) {
-      const isRequired = surveyQuestions[questionIndex][1];
+      const isRequired = surveyQuestions[questionIndex][resRequired];
       if (!responses[res] && isRequired) {
         alert(
-          `Please enter a response for question - "${surveyQuestions[questionIndex][2]}"`
+          `Please enter a response for question - "${surveyQuestions[questionIndex][question]}"`
         );
         return true;
       }
@@ -160,7 +160,7 @@ export const createEmailResponseDisplay = (responses) => {
     if (userResponse && explainRes) {
       element = `
         <div>
-          <h4>${q[2]}</h4>
+          <h4>${q.question}</h4>
           <p>${userResponse} - ${explainRes}</p>
         </div>
       `;
@@ -168,7 +168,7 @@ export const createEmailResponseDisplay = (responses) => {
     } else if (userResponse) {
       element = `
         <div>
-          <h4>${q[2]}</h4>
+          <h4>${q.question}</h4>
           <p>${userResponse}</p>
         </div>
       `;
