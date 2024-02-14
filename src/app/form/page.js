@@ -5,7 +5,7 @@ import { sendEmailPost } from "../utils/apicalls";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "../utils/apicalls";
 import Header from "../Components/Header/Header";
-import { checkSurveySubmit, createSurveyDisplay, needsExplanation } from "@/app/utils/utils";
+import { checkSurveySubmit, createSurveyDisplay } from "@/app/utils/utils";
 import { surveyQuestions } from "./SurveyQuestions";
 import DateInput from "../Components/DateInput/DateInput";
 import EmailInput from "../Components/EmailInput/EmailInput";

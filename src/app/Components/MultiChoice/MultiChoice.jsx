@@ -44,7 +44,10 @@ export default function MultiChoice({ qData, responseState, onChangeHandler }) {
           </div>
         );
       })}
-      {/* Conditionally render text input for "Other" and "No" response*/}
+      {/* Conditionally render text input if needsExplanation is true,
+      meaning the user picked a response that requires explanation,
+      then, if dictated by the explain options of the qData, show the 
+      explain input and make optional or required to respond */}
       {needsExplanation(responseState[qData.name]) && qData.explain?.showInput ? (
         <div className={styles["other-input-div"]}>
           <label htmlFor={`${qData.name}-explainInput`}>

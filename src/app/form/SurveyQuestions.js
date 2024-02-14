@@ -39,7 +39,7 @@ export const surveyQuestions = [
   {
     type: "multi",
     resRequired: true,
-    question: "Was outside appearance clean-clean windows, porch, doors, etc.?",
+    question: "Was outside appearance clean - clean windows, porch, doors, etc.?",
     responseOptions: ["Yes", "No"],
     explain: { showInput: true, resRequired: true },
   },

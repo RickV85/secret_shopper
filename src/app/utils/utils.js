@@ -48,6 +48,7 @@ export const createSurveyDisplay = (
   return questionDisplay;
 };
 
+// Checks user response to determine if its negative and needs explanation
 export const needsExplanation = (res) => {
   if (res) {
     const qResponse = res.toLowerCase();
