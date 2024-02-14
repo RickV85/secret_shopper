@@ -48,7 +48,7 @@ export default function MultiChoice({ qData, responseState, onChangeHandler }) {
       {needsExplanation(responseState[qData.name]) && qData.explain?.showInput ? (
         <div className={styles["other-input-div"]}>
           <label htmlFor={`${qData.name}-explainInput`}>
-            Please explain below:
+            {`${qData.explain.resRequired ? "Required -" : "Optional -"}  Please explain below:`}
           </label>
           <input
             type="text"
