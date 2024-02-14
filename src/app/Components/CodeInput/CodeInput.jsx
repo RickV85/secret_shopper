@@ -10,11 +10,6 @@ export default function CodeInput() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
 
-  // REMOVE AFTER TESTING
-  useEffect(() => {
-    window.sessionStorage.clear();
-  }, []);
-
   const handleChange = (e) => {
     setUserCode(e.target.value);
   };

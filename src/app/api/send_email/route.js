@@ -4,7 +4,7 @@ import { createEmailResponseDisplay } from "@/app/utils/utils";
 
 export async function POST(req) {
   try {
-    const resend = new Resend(process.env.RESEND_TEST_API_KEY);
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const emailContent = await req.json();
 
     if (!emailContent) {
@@ -13,8 +13,7 @@ export async function POST(req) {
 
     let { visitDate, userEmail, responses, photoUrl, comment } = emailContent;
     // Manager email address to send response to and have as a contact in user email
-    // CHANGE BACK TO JULIAN
-    const managerEmail = "rickv85@gmail.com";
+    const managerEmail = "julian@buttermilkkitchen.com";
 
     // Format visit date
     visitDate = new Date(visitDate).toLocaleDateString("en-US");
@@ -24,10 +23,9 @@ export async function POST(req) {
 
     const sendResult = await resend.batch.send([
       // Manager email
-      // ADD KELLY BACK IN
       {
         from: "Rick Vermeil <rick@rickvermeil.com>",
-        to: [managerEmail],
+        to: [managerEmail, "kelly@kellyberryphoto.com"],
         subject: `New Secret Shopper Response`,
         html: `
         <body>
