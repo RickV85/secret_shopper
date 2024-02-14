@@ -1,6 +1,6 @@
 "use client";
 import styles from "./CodeInput.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { verifyCode } from "@/app/utils/apicalls";
 import Link from "next/link";
