@@ -48,6 +48,22 @@ export const createSurveyDisplay = (
   return questionDisplay;
 };
 
+export const needsExplanation = (res) => {
+  if (res) {
+    const qResponse = res.toLowerCase();
+    const responsesReqExplanation = ["other", "no"];
+    if (responsesReqExplanation.includes(qResponse)) {
+      return true;
+    } else if (qResponse.startsWith("1") || qResponse.startsWith("2")) {
+      return true;
+    } else if (qResponse.endsWith("disagree")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
+
 export const isHeicImg = (photoName) => {
   const photoFileNameLength = photoName.length;
   const fileType = photoName.slice(photoFileNameLength - 4).toLowerCase();
@@ -138,10 +154,10 @@ export const checkSurveySubmit = (date, email, responses) => {
     // MultiChoice question response. These do not have question
     // data associated and are not required.
     if (!res.endsWith("explainRes")) {
-      const isRequired = surveyQuestions[questionIndex][resRequired];
+      const isRequired = surveyQuestions[questionIndex].resRequired;
       if (!responses[res] && isRequired) {
         alert(
-          `Please enter a response for question - "${surveyQuestions[questionIndex][question]}"`
+          `Please enter a response for question - "${surveyQuestions[questionIndex].question}"`
         );
         return true;
       }

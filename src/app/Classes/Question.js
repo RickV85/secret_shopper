@@ -6,7 +6,7 @@ export class Question {
   constructor(num, qData) {
     this.name = `q${num}`;
     this.type = qData.type;
-    this.required = qData.required || true;
+    this.resRequired = qData.resRequired || true;
     this.question = qData.question;
     this.responseOptions = qData.responseOptions;
     this.explain = qData.explain || null;

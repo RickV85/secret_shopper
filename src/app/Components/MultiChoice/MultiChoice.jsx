@@ -1,3 +1,4 @@
+import { needsExplanation } from "@/app/utils/utils";
 import styles from "./MultiChoice.module.css";
 import React from "react";
 
@@ -44,8 +45,7 @@ export default function MultiChoice({ qData, responseState, onChangeHandler }) {
         );
       })}
       {/* Conditionally render text input for "Other" and "No" response*/}
-      {(responseState[qData.name] === "Other" ||
-        responseState[qData.name] === "No") && qData.explain?.showInput ? (
+      {needsExplanation(responseState[qData.name]) && qData.explain?.showInput ? (
         <div className={styles["other-input-div"]}>
           <label htmlFor={`${qData.name}-explainInput`}>
             Please explain below:

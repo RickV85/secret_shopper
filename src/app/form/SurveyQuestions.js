@@ -64,6 +64,10 @@ export const surveyQuestions = [
       "2",
       "1 - Not at all clean or organized",
     ],
+    explain: {
+      showInput: true,
+      resRequired: false,
+    },
   },
   {
     type: "multi",
@@ -160,7 +164,7 @@ export const surveyQuestions = [
       "Strongly Disagree",
     ],
     explain: {
-      showInput: false,
+      showInput: true,
       resRequired: false,
     },
   },
@@ -168,9 +172,9 @@ export const surveyQuestions = [
     type: "multi",
     resRequired: true,
     question: "What was your overall experience with the customer service?",
-    responseOptions: ["5 - Excellent ", "4", "3", "2", "1 - Poor"],
+    responseOptions: ["5 - Excellent", "4", "3", "2", "1 - Poor"],
     explain: {
-      showInput: false,
+      showInput: true,
       resRequired: false,
     },
   },
@@ -179,9 +183,9 @@ export const surveyQuestions = [
     resRequired: true,
     question:
       "How would you rate the overall presentation and taste of the food?",
-    responseOptions: ["5 - Excellent ", "4", "3", "2", "1 - Poor"],
+    responseOptions: ["5 - Excellent", "4", "3", "2", "1 - Poor"],
     explain: {
-      showInput: false,
+      showInput: true,
       resRequired: false,
     },
   },
@@ -189,9 +193,9 @@ export const surveyQuestions = [
     type: "multi",
     resRequired: true,
     question: "How would you rate the quality of the food you received?",
-    responseOptions: ["5 - Excellent ", "4", "3", "2", "1 - Poor"],
+    responseOptions: ["5 - Excellent", "4", "3", "2", "1 - Poor"],
     explain: {
-      showInput: false,
+      showInput: true,
       resRequired: false,
     },
   },
