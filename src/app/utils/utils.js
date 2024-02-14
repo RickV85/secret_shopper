@@ -10,7 +10,7 @@ export const generateTodaysDate = () => {
 
 export const createSurveyQuestions = (questions) => {
   const questionObjects = questions.map((qData, i) => {
-    return new Question(i + 1, ...qData);
+    return new Question(i + 1, qData);
   });
 
   return questionObjects;
@@ -21,14 +21,14 @@ export const createSurveyDisplay = (
   responseState,
   inputChangeHandler
 ) => {
-  const surveyQuestions = createSurveyQuestions(questions);
-  const questionDisplay = surveyQuestions.map((q) => {
-    switch (q.type) {
+  const formQuestions = createSurveyQuestions(questions);
+  const questionDisplay = formQuestions.map((qData) => {
+    switch (qData.type) {
       case "multi":
         return (
           <MultiChoice
-            key={q.name}
-            data={q}
+            key={qData.name}
+            qData={qData}
             responseState={responseState}
             onChangeHandler={inputChangeHandler}
           />
@@ -36,8 +36,8 @@ export const createSurveyDisplay = (
       case "text":
         return (
           <TextInput
-            key={q.name}
-            data={q}
+            key={qData.name}
+            data={qData}
             responseState={responseState}
             onChangeHandler={inputChangeHandler}
           />
@@ -119,11 +119,12 @@ export const scaleAndProcessImage = (photo) => {
   });
 };
 
-// Using native HTML5 required, but keeping this active as a fallback
+// Using native HTML5 required, but keeping this active as a fallback.
+// Currently, this does not run as the browser catches the
+// incomplete field, scrolls up and shows a dialog where required.
 // Maybe implement more detailed form checking like num of chars,
 // data types, etc. here?
 export const checkSurveySubmit = (date, email, responses) => {
-  console.log("submit run")
   if (!date) {
     alert("Please enter a date for your visit.");
     return true;

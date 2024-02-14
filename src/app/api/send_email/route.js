@@ -13,7 +13,8 @@ export async function POST(req) {
 
     let { visitDate, userEmail, responses, photoUrl, comment } = emailContent;
     // Manager email address to send response to and have as a contact in user email
-    const managerEmail = "julian@buttermilkkitchen.com";
+    // CHANGE BACK TO JULIAN
+    const managerEmail = "rickv85@gmail.com";
 
     // Format visit date
     visitDate = new Date(visitDate).toLocaleDateString("en-US");
@@ -23,9 +24,10 @@ export async function POST(req) {
 
     const sendResult = await resend.batch.send([
       // Manager email
+      // ADD KELLY BACK IN
       {
         from: "Rick Vermeil <rick@rickvermeil.com>",
-        to: [managerEmail, "kelly@kellyberryphoto.com"],
+        to: [managerEmail],
         subject: `New Secret Shopper Response`,
         html: `
         <body>
