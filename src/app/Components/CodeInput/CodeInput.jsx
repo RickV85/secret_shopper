@@ -8,6 +8,7 @@ import Link from "next/link";
 export default function CodeInput() {
   const [userCode, setUserCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -18,7 +19,6 @@ export default function CodeInput() {
     setErrorMsg("Please check the code and try again");
     setTimeout(() => {
       setErrorMsg("");
-      setUserCode("");
     }, 2000);
   };
 
@@ -26,14 +26,17 @@ export default function CodeInput() {
     try {
       const formattedUserCode = userCode.toLowerCase().trim();
       const isAuthorized = await verifyCode(formattedUserCode);
+      setIsLoading(true);
 
       if (isAuthorized) {
         router.push("/form");
         window.sessionStorage.setItem("code", formattedUserCode);
       } else {
+        setIsLoading(false);
         failedAuth();
       }
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
       alert(
         "An error occurred, please refresh the page and try to input your code again."
@@ -62,9 +65,15 @@ export default function CodeInput() {
             if (e.key === "Enter") handleSubmit();
           }}
         />
-        <button className={styles["submit-btn"]} onClick={handleSubmit}>
-          Submit
-        </button>
+        {isLoading ? (
+          <div className={styles["loading-div"]}>
+            <h2 className={styles["loading-msg"]}>Loading...please wait</h2>
+          </div>
+        ) : (
+          <button className={styles["submit-btn"]} onClick={handleSubmit}>
+            Submit
+          </button>
+        )}
       </div>
       <p className={styles.details}>
         If you do not have a code and would like to participate in our secret

@@ -147,7 +147,7 @@ export default function Form() {
             </div>
           </form>
         ) : (
-          <h2 className={styles["initial-load-msg"]}>Loading...please wait</h2>
+          <h2 className={styles["loading-msg"]}>Loading...please wait</h2>
         )}
       </main>
     </>

@@ -43,6 +43,20 @@
   height: 3rem;
 }
 
+.loading-div {
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-msg {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #3054a1;
+}
+
 .details {
   width: 30rem;
 }
