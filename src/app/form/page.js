@@ -27,7 +27,7 @@ export default function Form() {
     // Verifies that a user has the code, prevents direct nav
     const verifyUserCodeGetSesStorage = async () => {
       try {
-        const userCode = await window.sessionStorage.getItem("code");
+        const userCode = window.sessionStorage.getItem("code");
         const isAuthorized = await verifyCode(userCode);
 
         if (!isAuthorized) {

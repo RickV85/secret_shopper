@@ -24,7 +24,7 @@ export async function POST(req) {
     const sendResult = await resend.batch.send([
       // Manager email
       {
-        from: "Rick Vermeil <rick@rickvermeil.com>",
+        from: "reservations@buttermilkkitchen.com",
         to: [managerEmail, "kelly@kellyberryphoto.com"],
         subject: `New Secret Shopper Response`,
         html: `
@@ -42,7 +42,7 @@ export async function POST(req) {
       },
       // User email
       {
-        from: "Rick Vermeil <rick@rickvermeil.com>",
+        from: "reservations@buttermilkkitchen.com",
         to: [userEmail],
         subject: "Thank you from Buttermilk Kitchen",
         html: `

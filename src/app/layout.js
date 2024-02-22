@@ -14,20 +14,22 @@ export const metadata = {
     index: false,
     follow: false,
   },
-  openGraph: {
+};
+
+if (process.env.NODE_ENV !== "development") {
+  metadata["openGraph"] = {
     type: "website",
     url: "https://buttermilk-shopper.vercel.app",
     title: "Secret Shopper - Buttermilk Kitchen",
-    description:
-      "Secret Shopper survey app for Buttermilk Kitchen Restaurant",
+    description: "Secret Shopper survey app for Buttermilk Kitchen Restaurant",
     siteName: "Secret Shopper - Buttermilk Kitchen",
     images: [
       {
         url: "/BK_Logo_400.jpg",
       },
     ],
-  },
-};
+  };
+}
 
 export default function RootLayout({ children }) {
   return (
